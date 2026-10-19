@@ -1,0 +1,2590 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Marketing Mind | Indian Marketing, Advertising and Media News</title>
+  <meta name="description" content="Marketing Mind is an Indian news platform covering marketing, advertising, media and startups." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
+  <style>
+    /* ============================================================
+       Marketing Mind — Editorial 3D Redesign
+       Brand: red #D80504 · black · white · Poppins (source site)
+       ============================================================ */
+    :root {
+      --mm-red: #d80504;
+      --mm-red-deep: #a80403;
+      --mm-black: #0a0a0a;
+      --mm-ink: #1a1a1a;
+      --mm-muted: #595c5f;
+      --mm-gray: #8a8d90;
+      --mm-line: #e8e8e8;
+      --mm-paper: #f7f5f2;
+      --mm-white: #ffffff;
+      --font-sans: "Poppins", Helvetica, Arial, sans-serif;
+      --font-display: "Instrument Serif", Georgia, serif;
+      --nav-h: 72px;
+      --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+      --max: 1240px;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: auto; }
+    html.lenis, html.lenis body { height: auto; }
+    body {
+      font-family: var(--font-sans);
+      color: var(--mm-ink);
+      background: var(--mm-paper);
+      line-height: 1.5;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+    img { max-width: 100%; height: auto; display: block; }
+    a { color: inherit; text-decoration: none; }
+    button { font: inherit; cursor: pointer; border: none; background: none; color: inherit; }
+    :focus-visible {
+      outline: 2px solid var(--mm-red);
+      outline-offset: 3px;
+    }
+    .sr-only {
+      position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+      overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0;
+    }
+
+    /* Progress */
+    .scroll-progress {
+      position: fixed; top: 0; left: 0; height: 3px; width: 0%;
+      background: var(--mm-red); z-index: 1000; transform-origin: left;
+      pointer-events: none;
+    }
+
+    /* Header */
+    .site-header {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 900;
+      height: var(--nav-h);
+      display: flex; align-items: center;
+      padding: 0 clamp(1rem, 3vw, 2.5rem);
+      transition: background 0.35s var(--ease-out), box-shadow 0.35s, backdrop-filter 0.35s;
+    }
+    .site-header.is-scrolled {
+      background: rgba(247, 245, 242, 0.92);
+      backdrop-filter: blur(14px);
+      box-shadow: 0 1px 0 rgba(0,0,0,0.06);
+    }
+    .site-header.is-scrolled .logo-white { opacity: 0; pointer-events: none; }
+    .site-header.is-scrolled .logo-black { opacity: 1; }
+    .site-header:not(.is-scrolled) .nav-link,
+    .site-header:not(.is-scrolled) .nav-toggle span { color: var(--mm-white); }
+    .site-header:not(.is-scrolled) .nav-toggle span {
+      background: var(--mm-white);
+    }
+
+    .header-inner {
+      width: 100%; max-width: var(--max); margin: 0 auto;
+      display: flex; align-items: center; justify-content: space-between; gap: 1.5rem;
+    }
+    .brand {
+      display: flex; flex-direction: column; gap: 0.15rem; flex-shrink: 0;
+      position: relative; width: min(200px, 42vw);
+    }
+    .brand img {
+      width: 100%; height: auto;
+      transition: opacity 0.3s;
+    }
+    .logo-black { position: absolute; inset: 0; opacity: 0; }
+    .brand-tag {
+      font-size: 0.55rem; letter-spacing: 0.22em; text-transform: uppercase;
+      color: var(--mm-muted); font-weight: 500; margin-top: 0.15rem;
+    }
+    .site-header:not(.is-scrolled) .brand-tag { color: rgba(255,255,255,0.65); }
+
+    .nav-desktop {
+      display: none; align-items: center; gap: 0.15rem;
+    }
+    @media (min-width: 960px) {
+      .nav-desktop { display: flex; }
+      .nav-toggle { display: none !important; }
+    }
+    .nav-link {
+      font-size: 0.72rem; font-weight: 600; letter-spacing: 0.06em;
+      text-transform: uppercase; padding: 0.55rem 0.7rem;
+      color: var(--mm-ink); position: relative;
+      transition: color 0.25s;
+    }
+    .nav-link::after {
+      content: ""; position: absolute; left: 0.7rem; right: 0.7rem; bottom: 0.3rem;
+      height: 2px; background: var(--mm-red); transform: scaleX(0);
+      transform-origin: left; transition: transform 0.3s var(--ease-out);
+    }
+    .nav-link:hover, .nav-link:focus-visible { color: var(--mm-red); }
+    .nav-link:hover::after, .nav-link:focus-visible::after { transform: scaleX(1); }
+
+    .header-actions { display: flex; align-items: center; gap: 0.75rem; }
+    .btn-magnetic {
+      display: inline-flex; align-items: center; gap: 0.45rem;
+      background: var(--mm-red); color: var(--mm-white);
+      font-size: 0.7rem; font-weight: 600; letter-spacing: 0.08em;
+      text-transform: uppercase; padding: 0.7rem 1.1rem;
+      border-radius: 2px; transition: background 0.25s, transform 0.2s;
+      will-change: transform;
+    }
+    .btn-magnetic:hover { background: var(--mm-red-deep); }
+    .btn-magnetic svg { width: 14px; height: 14px; }
+
+    .nav-toggle {
+      width: 44px; height: 44px; display: flex; flex-direction: column;
+      align-items: center; justify-content: center; gap: 5px; z-index: 920;
+      position: relative;
+    }
+    .nav-toggle span {
+      display: block; width: 22px; height: 2px; background: var(--mm-ink);
+      transition: transform 0.3s, opacity 0.3s, background 0.3s;
+    }
+    /* When menu is open, header toggle hides — panel close button is the exit control */
+    .nav-toggle[aria-expanded="true"] {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .nav-mobile[hidden] { display: none !important; }
+    .nav-mobile {
+      position: fixed; inset: 0; background: var(--mm-black);
+      color: var(--mm-white); z-index: 915;
+      display: flex; flex-direction: column; justify-content: center;
+      padding: 5.5rem 2rem 2rem; gap: 0.5rem;
+      transform: translateX(100%); transition: transform 0.45s var(--ease-out);
+    }
+    .nav-mobile.is-open { transform: translateX(0); display: flex !important; }
+    .nav-mobile-close {
+      position: absolute;
+      top: max(1rem, env(safe-area-inset-top));
+      right: max(1rem, env(safe-area-inset-right));
+      width: 48px;
+      height: 48px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0;
+      color: var(--mm-white);
+      border: 1px solid rgba(255,255,255,0.28);
+      border-radius: 50%;
+      background: rgba(255,255,255,0.08);
+      z-index: 921;
+      transition: background 0.25s, border-color 0.25s, color 0.25s, transform 0.25s;
+    }
+    .nav-mobile-close::after {
+      content: "Close";
+      position: absolute;
+      right: calc(100% + 0.65rem);
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.65);
+      white-space: nowrap;
+      pointer-events: none;
+    }
+    .nav-mobile-close:hover,
+    .nav-mobile-close:focus-visible {
+      background: var(--mm-red);
+      border-color: var(--mm-red);
+      color: var(--mm-white);
+    }
+    .nav-mobile-close svg {
+      width: 20px;
+      height: 20px;
+      display: block;
+    }
+    .nav-mobile-close-label {
+      position: absolute;
+      width: 1px; height: 1px;
+      padding: 0; margin: -1px;
+      overflow: hidden; clip: rect(0,0,0,0);
+      white-space: nowrap; border: 0;
+    }
+    .nav-mobile a {
+      font-size: clamp(1.4rem, 5vw, 2rem); font-weight: 600;
+      padding: 0.6rem 0; border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+    .nav-mobile a:hover { color: var(--mm-red); }
+
+    /* ========== HERO ========== */
+    .hero {
+      position: relative; height: 100vh; min-height: 640px;
+      background: var(--mm-black); color: var(--mm-white);
+      overflow: hidden; perspective: 1200px;
+      isolation: isolate;
+      contain: paint;
+    }
+    .hero-stage {
+      position: absolute; inset: 0;
+      transform-style: preserve-3d;
+      will-change: transform;
+      /* GSAP owns layer transforms; stage gets subtle mouse parallax only */
+    }
+    .hero-layer {
+      position: absolute; border-radius: 4px; overflow: hidden;
+      box-shadow: 0 30px 80px rgba(0,0,0,0.55);
+      will-change: transform, opacity;
+      transform-style: preserve-3d;
+      /* Base 3D pose is set by GSAP so scroll scrub never fights CSS */
+      backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
+    }
+    .hero-layer img {
+      width: 100%; height: 100%; object-fit: cover;
+      display: block;
+      pointer-events: none;
+    }
+    .hero-layer--back {
+      width: min(52vw, 720px); aspect-ratio: 16/11;
+      left: 48%; top: 18%;
+      opacity: 0.55;
+    }
+    .hero-layer--mid {
+      width: min(38vw, 480px); aspect-ratio: 4/3;
+      left: 8%; top: 28%;
+      opacity: 0.85;
+    }
+    .hero-layer--front {
+      width: min(42vw, 560px); aspect-ratio: 4/3;
+      right: 6%; bottom: 12%;
+      left: auto;
+    }
+    .hero-layer--accent {
+      width: min(22vw, 260px); aspect-ratio: 1;
+      left: 38%; bottom: 18%;
+      border: 2px solid rgba(255,255,255,0.2);
+    }
+
+    .hero-content {
+      position: relative; z-index: 5;
+      height: 100%; max-width: var(--max); margin: 0 auto;
+      padding: calc(var(--nav-h) + 2rem) clamp(1rem, 3vw, 2.5rem) 4rem;
+      display: flex; flex-direction: column; justify-content: flex-end;
+      pointer-events: none;
+    }
+    .hero-content a, .hero-content .scroll-hint { pointer-events: auto; }
+    .hero-eyebrow {
+      font-size: 0.7rem; font-weight: 600; letter-spacing: 0.2em;
+      text-transform: uppercase; color: var(--mm-red); margin-bottom: 1rem;
+    }
+    .hero-title {
+      font-family: var(--font-display);
+      font-size: clamp(2.6rem, 7vw, 5.2rem);
+      font-weight: 400; line-height: 1.05;
+      max-width: 14ch; margin-bottom: 1.25rem;
+      letter-spacing: -0.02em;
+    }
+    .hero-title .word {
+      display: inline-block; overflow: hidden;
+    }
+    .hero-title .word span {
+      display: inline-block; transform: translateY(110%);
+    }
+    .hero-dek {
+      font-size: clamp(0.95rem, 1.5vw, 1.15rem);
+      color: rgba(255,255,255,0.72); max-width: 36ch;
+      font-weight: 300; margin-bottom: 2rem;
+    }
+    .hero-cta {
+      display: inline-flex; align-items: center; gap: 0.6rem;
+      font-size: 0.75rem; font-weight: 600; letter-spacing: 0.1em;
+      text-transform: uppercase; color: var(--mm-white);
+      border-bottom: 1px solid var(--mm-red); padding-bottom: 0.35rem;
+      width: fit-content; transition: color 0.25s;
+    }
+    .hero-cta:hover { color: var(--mm-red); }
+
+    .scroll-hint {
+      position: absolute; bottom: 1.75rem; left: 50%;
+      transform: translateX(-50%);
+      display: flex; flex-direction: column; align-items: center; gap: 0.5rem;
+      font-size: 0.65rem; letter-spacing: 0.18em; text-transform: uppercase;
+      color: rgba(255,255,255,0.5); z-index: 6;
+    }
+    .scroll-hint-line {
+      width: 1px; height: 48px; background: rgba(255,255,255,0.25);
+      position: relative; overflow: hidden;
+    }
+    .scroll-hint-line::after {
+      content: ""; position: absolute; top: -100%; left: 0; width: 100%; height: 100%;
+      background: var(--mm-red); animation: scrollPulse 1.8s ease-in-out infinite;
+    }
+    @keyframes scrollPulse {
+      0% { top: -100%; }
+      50% { top: 100%; }
+      100% { top: 100%; }
+    }
+
+    .hero-vignette {
+      position: absolute; inset: 0; z-index: 2; pointer-events: none;
+      background:
+        linear-gradient(90deg, rgba(10,10,10,0.88) 0%, rgba(10,10,10,0.35) 45%, rgba(10,10,10,0.55) 100%),
+        linear-gradient(180deg, rgba(10,10,10,0.5) 0%, transparent 30%, rgba(10,10,10,0.75) 100%);
+    }
+
+    /* ========== SECTIONS COMMON ========== */
+    .section {
+      position: relative; padding: clamp(4rem, 10vw, 8rem) clamp(1rem, 3vw, 2.5rem);
+    }
+    .section-inner { max-width: var(--max); margin: 0 auto; }
+    .section-label {
+      display: inline-flex; align-items: center; gap: 0.55rem;
+      font-size: 0.7rem; font-weight: 700; letter-spacing: 0.16em;
+      text-transform: uppercase; color: var(--mm-red); margin-bottom: 1rem;
+    }
+    .section-label::before {
+      content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--mm-red);
+    }
+    .section-title {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 4.5vw, 3.5rem);
+      line-height: 1.1; letter-spacing: -0.02em;
+      margin-bottom: 0.75rem; max-width: 18ch;
+    }
+    .section-dek {
+      color: var(--mm-muted); font-size: 1.05rem; max-width: 42ch;
+      margin-bottom: 2.5rem; font-weight: 300;
+    }
+    .view-all {
+      font-size: 0.75rem; font-weight: 600; letter-spacing: 0.08em;
+      text-transform: uppercase; color: var(--mm-red);
+      display: inline-flex; align-items: center; gap: 0.4rem;
+      transition: gap 0.25s;
+    }
+    .view-all:hover { gap: 0.7rem; }
+
+    /* Scene A — Intro */
+    .intro {
+      background: var(--mm-paper);
+      overflow: hidden;
+    }
+    .intro-grid {
+      display: grid; gap: 3rem;
+      align-items: center;
+    }
+    @media (min-width: 900px) {
+      .intro-grid { grid-template-columns: 1.1fr 0.9fr; gap: 4rem; }
+    }
+    .intro-headline {
+      font-family: var(--font-display);
+      font-size: clamp(2.2rem, 5vw, 4rem);
+      line-height: 1.12; letter-spacing: -0.02em;
+    }
+    .intro-headline .line {
+      display: block; overflow: hidden; padding-bottom: 0.08em;
+    }
+    .intro-headline .line span {
+      display: block; transform: translateY(105%);
+    }
+    .intro-copy {
+      color: var(--mm-muted); font-size: 1.1rem; font-weight: 300;
+      max-width: 36ch; margin-top: 1.5rem;
+    }
+    .intro-visual {
+      position: relative; aspect-ratio: 4/5; border-radius: 4px; overflow: hidden;
+      transform-style: preserve-3d;
+    }
+    .intro-visual img {
+      width: 100%; height: 100%; object-fit: cover;
+      will-change: transform;
+    }
+    .intro-visual-float {
+      position: absolute; width: 48%; aspect-ratio: 1;
+      right: -8%; bottom: -6%; border-radius: 4px; overflow: hidden;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.25);
+      border: 3px solid var(--mm-paper);
+      will-change: transform;
+    }
+    .intro-visual-float img { width: 100%; height: 100%; object-fit: cover; }
+
+    /* Scene B — Advertising spotlight (pinned editorial stack) */
+    .campaigns {
+      --adv-ink: #0c0c0c;
+      --adv-paper: #f3efe8;
+      --adv-line: rgba(255,255,255,0.12);
+      background: var(--adv-ink);
+      color: var(--mm-white);
+      padding: 0;
+    }
+    .adv-pin {
+      height: 100vh;
+      min-height: 640px;
+      display: grid;
+      grid-template-columns: minmax(0, 1.15fr) minmax(280px, 0.85fr);
+      gap: 0;
+      overflow: hidden;
+      position: relative;
+    }
+    .adv-stage {
+      position: relative;
+      overflow: hidden;
+      background: #111;
+      isolation: isolate;
+    }
+    .adv-slide {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+      z-index: 1;
+    }
+    .adv-slide.is-active {
+      opacity: 1;
+      visibility: visible;
+      pointer-events: auto;
+      z-index: 2;
+    }
+    .adv-slide img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transform: scale(1.06);
+      will-change: transform, clip-path;
+      filter: saturate(1.05) contrast(1.04);
+    }
+    .adv-slide.is-active img {
+      animation: advKen 8s ease-out forwards;
+    }
+    @keyframes advKen {
+      from { transform: scale(1.08); }
+      to { transform: scale(1); }
+    }
+    .adv-stage-veil {
+      position: absolute;
+      inset: 0;
+      z-index: 3;
+      pointer-events: none;
+      background:
+        linear-gradient(90deg, transparent 55%, rgba(12,12,12,0.55) 100%),
+        linear-gradient(180deg, rgba(12,12,12,0.25) 0%, transparent 30%, rgba(12,12,12,0.55) 100%);
+    }
+    .adv-counter {
+      position: absolute;
+      left: clamp(1rem, 3vw, 2rem);
+      bottom: clamp(1.25rem, 3vh, 2rem);
+      z-index: 4;
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.7);
+      display: flex;
+      align-items: baseline;
+      gap: 0.55rem;
+    }
+    .adv-counter strong {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 400;
+      letter-spacing: 0;
+      color: var(--mm-white);
+      line-height: 1;
+    }
+    .adv-progress {
+      position: absolute;
+      left: 0; right: 0; bottom: 0;
+      height: 3px;
+      background: rgba(255,255,255,0.12);
+      z-index: 4;
+    }
+    .adv-progress > span {
+      display: block;
+      height: 100%;
+      width: 0%;
+      background: var(--mm-red);
+      transform-origin: left center;
+    }
+
+    .adv-copy {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: clamp(5.5rem, 12vh, 7rem) clamp(1.25rem, 3vw, 2.75rem) clamp(1.75rem, 4vh, 2.5rem);
+      background:
+        radial-gradient(ellipse 80% 50% at 100% 0%, rgba(216,5,4,0.18), transparent 55%),
+        var(--adv-ink);
+      border-left: 1px solid var(--adv-line);
+      min-height: 0;
+    }
+    .adv-copy-top .section-label { margin-bottom: 0.85rem; }
+    .adv-kicker {
+      font-family: var(--font-display);
+      font-size: clamp(2.4rem, 5vw, 4rem);
+      line-height: 0.95;
+      letter-spacing: -0.03em;
+      margin-bottom: 0.35rem;
+    }
+    .adv-viewall {
+      margin-top: 1rem;
+      color: rgba(255,255,255,0.65);
+    }
+    .adv-viewall:hover { color: var(--mm-red); }
+
+    .adv-story {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding-top: 2rem;
+      min-height: 0;
+    }
+    .adv-cat {
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--mm-red);
+      margin-bottom: 0.85rem;
+    }
+    .adv-title {
+      font-family: var(--font-display);
+      font-size: clamp(1.55rem, 2.8vw, 2.35rem);
+      line-height: 1.15;
+      letter-spacing: -0.02em;
+      margin-bottom: 1rem;
+      max-width: 16ch;
+    }
+    .adv-date {
+      font-size: 0.78rem;
+      color: rgba(255,255,255,0.45);
+      margin-bottom: 1.75rem;
+    }
+    .adv-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.55rem;
+      width: fit-content;
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--mm-white);
+      border-bottom: 1px solid var(--mm-red);
+      padding-bottom: 0.35rem;
+      transition: color 0.25s, gap 0.25s;
+    }
+    .adv-cta:hover { color: var(--mm-red); gap: 0.8rem; }
+
+    .adv-dots {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.45rem;
+      margin-top: 2rem;
+    }
+    .adv-dot {
+      width: 28px;
+      height: 3px;
+      border: 0;
+      padding: 0;
+      background: rgba(255,255,255,0.2);
+      cursor: pointer;
+      transition: background 0.25s, transform 0.25s;
+    }
+    .adv-dot[aria-current="true"] {
+      background: var(--mm-red);
+      transform: scaleY(1.4);
+    }
+    .adv-dot:focus-visible {
+      outline: 2px solid var(--mm-red);
+      outline-offset: 3px;
+    }
+
+    /* Mobile: stacked editorial list — no pin */
+    .adv-mobile-list { display: none; }
+
+    .adv-m-hint { display: none; }
+    .adv-m-rail { display: contents; }
+
+    @media (max-width: 899px) {
+      .adv-pin { display: none; }
+      .campaigns {
+        padding: 2.5rem 0 1.75rem;
+      }
+      .adv-mobile-list {
+        display: block;
+        max-width: none;
+        margin: 0;
+      }
+      .adv-mobile-list .section-label,
+      .adv-mobile-list .section-title,
+      .adv-mobile-list > p {
+        padding-inline: clamp(1rem, 3vw, 2rem);
+      }
+      .adv-mobile-list .section-title {
+        color: var(--mm-white);
+        margin-bottom: 0.65rem;
+      }
+      .adv-m-hint {
+        display: block;
+        padding-inline: clamp(1rem, 3vw, 2rem);
+        font-size: 0.65rem;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: rgba(255,255,255,0.4);
+        margin-bottom: 0.85rem;
+      }
+      .adv-m-rail {
+        display: flex;
+        gap: 0.9rem;
+        overflow-x: auto;
+        scroll-snap-type: x mandatory;
+        -webkit-overflow-scrolling: touch;
+        padding: 0 clamp(1rem, 3vw, 2rem) 0.5rem;
+        scrollbar-width: none;
+      }
+      .adv-m-rail::-webkit-scrollbar { display: none; }
+      .adv-m-card {
+        flex: 0 0 min(72vw, 300px);
+        width: min(72vw, 300px);
+        scroll-snap-align: start;
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 0.55rem;
+        margin-bottom: 0;
+        color: inherit;
+      }
+      .adv-m-card figure {
+        margin: 0;
+        aspect-ratio: 16/11;
+        overflow: hidden;
+        border-radius: 4px;
+        background: #1a1a1a;
+      }
+      .adv-m-card img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+      .adv-m-card h3 {
+        font-size: 0.98rem;
+        font-weight: 600;
+        line-height: 1.3;
+      }
+      .adv-m-card .adv-cat { margin-bottom: 0; }
+      .adv-m-card .adv-date { margin-bottom: 0; font-size: 0.7rem; color: rgba(255,255,255,0.45); }
+      .adv-m-card:hover h3 { color: var(--mm-red); }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .adv-slide.is-active img { animation: none; transform: none; }
+    }
+
+    /* Shared category label (Explore panels + legacy) */
+    .campaign-card-cat {
+      font-size: 0.65rem; font-weight: 700; letter-spacing: 0.12em;
+      text-transform: uppercase; color: var(--mm-red); margin-bottom: 0.4rem;
+    }
+
+    /* Scene C — Latest grid */
+    .latest { background: var(--mm-white); }
+    .latest-head {
+      display: flex; flex-wrap: wrap; align-items: flex-end;
+      justify-content: space-between; gap: 1rem; margin-bottom: 2.5rem;
+    }
+    .latest-head .section-title { margin-bottom: 0; }
+    .story-grid {
+      display: grid; gap: 1.5rem;
+      grid-template-columns: 1fr;
+    }
+    @media (min-width: 640px) {
+      .story-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (min-width: 1000px) {
+      .story-grid { grid-template-columns: repeat(3, 1fr); gap: 1.75rem; }
+    }
+    .story-card {
+      display: flex; flex-direction: column; gap: 0.9rem;
+      opacity: 0; transform: translateY(40px);
+      transition: opacity 0.7s var(--ease-out), transform 0.7s var(--ease-out);
+    }
+    .story-card.is-visible { opacity: 1; transform: translateY(0); }
+    .story-card-media {
+      position: relative; aspect-ratio: 7/5; overflow: hidden; border-radius: 4px;
+      background: var(--mm-line);
+      perspective: 800px;
+    }
+    .story-card-media img {
+      width: 100%; height: 100%; object-fit: cover;
+      transition: transform 0.7s var(--ease-out);
+      will-change: transform;
+    }
+    .story-card:hover .story-card-media img { transform: scale(1.06); }
+    .story-card-body { display: flex; flex-direction: column; gap: 0.4rem; flex: 1; }
+    .story-cat {
+      font-size: 0.65rem; font-weight: 700; letter-spacing: 0.1em;
+      text-transform: uppercase; color: var(--mm-red);
+    }
+    .story-title {
+      font-size: 1.05rem; font-weight: 600; line-height: 1.35;
+      transition: color 0.25s;
+    }
+    .story-card:hover .story-title { color: var(--mm-red); }
+    .story-date {
+      font-size: 0.75rem; color: var(--mm-gray); margin-top: auto;
+    }
+
+    /* Scene D — Categories */
+    .categories {
+      background: var(--mm-paper);
+      overflow: hidden;
+    }
+    .cat-tabs {
+      display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 2rem;
+    }
+    .cat-tab {
+      font-size: 0.72rem; font-weight: 600; letter-spacing: 0.08em;
+      text-transform: uppercase; padding: 0.65rem 1.1rem;
+      border: 1px solid var(--mm-line); border-radius: 2px;
+      color: var(--mm-muted); transition: all 0.25s;
+      background: var(--mm-white);
+    }
+    .cat-tab:hover, .cat-tab[aria-selected="true"] {
+      background: var(--mm-red); color: var(--mm-white); border-color: var(--mm-red);
+    }
+    .cat-panel { display: none; }
+    .cat-panel.is-active { display: block; animation: fadePanel 0.45s var(--ease-out); }
+    @keyframes fadePanel {
+      from { opacity: 0; transform: translateY(12px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .cat-rail {
+      display: grid; gap: 1.25rem;
+      grid-template-columns: 1fr;
+    }
+    @media (min-width: 700px) {
+      .cat-rail { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (min-width: 1100px) {
+      .cat-rail { grid-template-columns: 1.4fr 1fr 1fr; }
+    }
+    .cat-feature {
+      position: relative; aspect-ratio: 16/11; border-radius: 4px; overflow: hidden;
+      grid-row: span 2;
+    }
+    @media (max-width: 1099px) {
+      .cat-feature { grid-row: auto; aspect-ratio: 16/10; }
+    }
+    .cat-feature img {
+      width: 100%; height: 100%; object-fit: cover;
+      transition: transform 0.7s var(--ease-out);
+    }
+    .cat-feature:hover img { transform: scale(1.04); }
+    .cat-feature-meta {
+      position: absolute; inset: auto 0 0 0;
+      padding: 3rem 1.5rem 1.5rem;
+      background: linear-gradient(transparent, rgba(0,0,0,0.85));
+      color: var(--mm-white);
+    }
+    .cat-feature-meta h3 {
+      font-size: clamp(1.15rem, 2vw, 1.45rem); font-weight: 600; line-height: 1.3;
+    }
+    .cat-mini {
+      display: grid; grid-template-columns: 120px 1fr; gap: 1rem; align-items: center;
+      padding: 0.75rem; background: var(--mm-white); border-radius: 4px;
+      transition: transform 0.3s var(--ease-out), box-shadow 0.3s;
+    }
+    .cat-mini:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 30px rgba(0,0,0,0.08);
+    }
+    .cat-mini-img {
+      aspect-ratio: 4/3; border-radius: 3px; overflow: hidden; background: var(--mm-line);
+    }
+    .cat-mini-img img { width: 100%; height: 100%; object-fit: cover; }
+    .cat-mini h4 { font-size: 0.9rem; font-weight: 600; line-height: 1.35; }
+    .cat-mini time { font-size: 0.7rem; color: var(--mm-gray); display: block; margin-top: 0.35rem; }
+    .cat-view-link { margin-top: 1.75rem; }
+
+    /* Scene E — Featured pin story */
+    .feature-story {
+      background: var(--mm-black); color: var(--mm-white);
+      padding: 0;
+    }
+    .feature-pin-wrap {
+      position: relative;
+    }
+    .feature-pin {
+      height: 100vh; min-height: 600px;
+      display: grid; align-items: center;
+      padding: clamp(2rem, 5vw, 4rem) clamp(1rem, 3vw, 2.5rem);
+      max-width: var(--max); margin: 0 auto;
+      gap: 2rem;
+    }
+    @media (min-width: 900px) {
+      .feature-pin { grid-template-columns: 1.1fr 0.9fr; gap: 4rem; }
+    }
+    .feature-image-wrap {
+      position: relative; aspect-ratio: 4/5; border-radius: 4px; overflow: hidden;
+      will-change: transform;
+    }
+    .feature-image-wrap img {
+      width: 100%; height: 100%; object-fit: cover;
+      will-change: transform;
+    }
+    .feature-text {
+      will-change: transform, opacity;
+    }
+    .feature-text .section-label { margin-bottom: 1.25rem; }
+    .feature-text h2 {
+      font-family: var(--font-display);
+      font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+      line-height: 1.15; margin-bottom: 1.25rem;
+    }
+    .feature-text p {
+      color: rgba(255,255,255,0.65); font-weight: 300;
+      font-size: 1.05rem; max-width: 38ch; margin-bottom: 1.75rem;
+    }
+    .feature-meta {
+      font-size: 0.75rem; color: rgba(255,255,255,0.45); margin-bottom: 1.5rem;
+    }
+
+    @media (max-width: 899px) {
+      .feature-pin { height: auto; min-height: 0; padding-top: 4rem; padding-bottom: 4rem; }
+      .feature-image-wrap { aspect-ratio: 16/11; max-height: 360px; }
+    }
+
+    /* Scene F — Footer */
+    .site-footer {
+      background: var(--mm-ink); color: rgba(255,255,255,0.75);
+      padding: clamp(3.5rem, 8vw, 5.5rem) clamp(1rem, 3vw, 2.5rem) 2rem;
+    }
+    .footer-inner { max-width: var(--max); margin: 0 auto; }
+    .footer-top {
+      display: grid; gap: 2.5rem;
+      grid-template-columns: 1fr;
+      padding-bottom: 3rem;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+    @media (min-width: 800px) {
+      .footer-top { grid-template-columns: 1.4fr 1fr 1fr; }
+    }
+    .footer-brand img { width: min(200px, 60%); margin-bottom: 1.25rem; }
+    .footer-brand p {
+      font-size: 0.95rem; font-weight: 300; max-width: 36ch; line-height: 1.6;
+    }
+    .footer-col h3 {
+      font-size: 0.7rem; font-weight: 700; letter-spacing: 0.14em;
+      text-transform: uppercase; color: var(--mm-white); margin-bottom: 1.1rem;
+    }
+    .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 0.55rem; }
+    .footer-col a {
+      font-size: 0.9rem; color: rgba(255,255,255,0.6);
+      transition: color 0.25s;
+    }
+    .footer-col a:hover { color: var(--mm-red); }
+    .footer-social {
+      display: flex; gap: 0.75rem; margin-top: 1.5rem; flex-wrap: wrap;
+    }
+    .footer-social a {
+      width: 40px; height: 40px; border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 50%; display: flex; align-items: center; justify-content: center;
+      color: var(--mm-white); transition: border-color 0.25s, background 0.25s, transform 0.25s;
+    }
+    .footer-social a:hover {
+      border-color: var(--mm-red); background: var(--mm-red); transform: translateY(-2px);
+    }
+    .footer-social svg { width: 16px; height: 16px; fill: currentColor; }
+    .footer-bottom {
+      padding-top: 1.75rem;
+      display: flex; flex-wrap: wrap; gap: 1rem;
+      justify-content: space-between; align-items: center;
+      font-size: 0.8rem; color: rgba(255,255,255,0.4);
+    }
+    .footer-bottom a { color: rgba(255,255,255,0.55); }
+    .footer-bottom a:hover { color: var(--mm-red); }
+
+    /* Reduced motion */
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+      }
+      .story-card { opacity: 1; transform: none; }
+      .hero-title .word span,
+      .intro-headline .line span { transform: none; }
+      .scroll-hint-line::after { animation: none; }
+    }
+
+    /* ============================================================
+       MOBILE — shorter page, denser UX (≤767px)
+       ============================================================ */
+    @media (max-width: 767px) {
+      :root { --nav-h: 60px; }
+
+      /* Header: tighter, newsletter icon-only */
+      .brand { width: min(148px, 46vw); }
+      .brand-tag { display: none; }
+      .btn-magnetic {
+        padding: 0.65rem;
+        font-size: 0;
+        gap: 0;
+      }
+      .btn-magnetic svg { width: 16px; height: 16px; }
+
+      .section {
+        padding: 1.65rem 1rem;
+      }
+      .section-title {
+        font-size: clamp(1.5rem, 6.5vw, 1.9rem);
+        max-width: none;
+        margin-bottom: 0.35rem;
+      }
+      .section-dek { font-size: 0.88rem; margin-bottom: 0.9rem; }
+      .section-label { margin-bottom: 0.45rem; }
+
+      /* Hero: full-bleed image plane */
+      .hero {
+        height: 100svh;
+        min-height: 100svh;
+        max-height: none;
+        padding-bottom: 0;
+      }
+      .hero-stage {
+        inset: 0;
+        transform: none !important;
+      }
+      .hero-vignette {
+        background:
+          linear-gradient(180deg, rgba(10,10,10,0.55) 0%, rgba(10,10,10,0.2) 32%, rgba(10,10,10,0.65) 58%, rgba(10,10,10,0.94) 100%);
+      }
+      .hero-layer {
+        border-radius: 0;
+        box-shadow: none;
+      }
+      /* Photographic plane only — hide designed/card layers */
+      .hero-layer--front,
+      .hero-layer--accent,
+      .hero-layer--back {
+        display: none;
+      }
+      .hero-layer--mid {
+        display: block !important;
+        inset: 0 !important;
+        width: 100% !important;
+        height: 100% !important;
+        max-width: none !important;
+        right: auto !important;
+        left: 0 !important;
+        top: 0 !important;
+        bottom: 0 !important;
+        aspect-ratio: auto !important;
+        opacity: 1 !important;
+        transform: none !important;
+        will-change: auto;
+      }
+      .hero-layer--mid img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center 35%;
+        transform-origin: center center;
+      }
+      .hero-content {
+        padding: calc(var(--nav-h) + 1rem) 1.15rem 1.75rem;
+        min-height: 100%;
+        height: 100%;
+        max-width: none;
+        justify-content: flex-end;
+      }
+      .hero-eyebrow { margin-bottom: 0.5rem; font-size: 0.6rem; }
+      .hero-title {
+        max-width: 12ch;
+        font-size: clamp(2rem, 8.5vw, 2.55rem);
+        margin-bottom: 0.6rem;
+      }
+      .hero-dek {
+        font-size: 0.88rem;
+        margin-bottom: 1rem;
+        max-width: 30ch;
+        color: rgba(255,255,255,0.82);
+      }
+      .scroll-hint { display: none; }
+
+      /* Intro: text + thumb side-by-side */
+      .intro { padding-top: 1.35rem; padding-bottom: 1.35rem; }
+      .intro-grid {
+        display: grid;
+        grid-template-columns: 1.15fr 0.85fr;
+        gap: 0.85rem;
+        align-items: start;
+      }
+      .intro-headline { font-size: clamp(1.2rem, 5.2vw, 1.45rem); }
+      .intro-copy {
+        font-size: 0.72rem;
+        margin-top: 0.4rem;
+        max-width: none;
+        line-height: 1.35;
+      }
+      .intro-visual {
+        aspect-ratio: 3/4;
+        max-height: 168px;
+        margin-top: 0.15rem;
+      }
+      .intro-visual-float { display: none; }
+      .intro-grid > div:first-child > p:last-of-type {
+        margin-top: 0.55rem !important;
+      }
+      .intro .view-all { font-size: 0.72rem; }
+
+      /* Advertising: horizontal snap rail */
+      .campaigns {
+        padding: 1.5rem 0 1.15rem;
+      }
+      .adv-mobile-list {
+        padding-inline: 0;
+      }
+      .adv-mobile-list .section-label,
+      .adv-mobile-list .section-title,
+      .adv-mobile-list > .view-all,
+      .adv-mobile-list > p {
+        padding-inline: 1rem;
+      }
+      .adv-mobile-list .section-title { margin-bottom: 0.65rem; }
+      .adv-m-rail {
+        display: flex;
+        gap: 0.75rem;
+        overflow-x: auto;
+        scroll-snap-type: x mandatory;
+        -webkit-overflow-scrolling: touch;
+        padding: 0 1rem 0.5rem;
+        scrollbar-width: none;
+      }
+      .adv-m-rail::-webkit-scrollbar { display: none; }
+      .adv-m-card {
+        flex: 0 0 min(78vw, 270px);
+        width: min(78vw, 270px);
+        scroll-snap-align: start;
+        margin-bottom: 0;
+        gap: 0.35rem;
+      }
+      .adv-m-card figure {
+        aspect-ratio: 16/10;
+        max-height: 168px;
+      }
+      .adv-m-card h3 {
+        font-size: 0.84rem;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+      }
+      .adv-m-card .adv-date { margin-bottom: 0; font-size: 0.68rem; }
+      .adv-m-hint {
+        display: block;
+        padding: 0 1rem;
+        font-size: 0.62rem;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: rgba(255,255,255,0.4);
+        margin-bottom: 0.55rem;
+      }
+
+      /* Latest: dense list, first 5 only */
+      .latest { padding-top: 1.5rem; padding-bottom: 1.5rem; }
+      .latest-head { margin-bottom: 0.75rem; gap: 0.35rem; }
+      .story-grid {
+        display: flex;
+        flex-direction: column;
+        gap: 0;
+        border-top: 1px solid var(--mm-line);
+      }
+      .story-card {
+        display: grid;
+        grid-template-columns: 68px 1fr;
+        gap: 0.7rem;
+        align-items: center;
+        padding: 0.65rem 0;
+        border-bottom: 1px solid var(--mm-line);
+        opacity: 1;
+        transform: none;
+      }
+      .story-card:nth-child(n+5) { display: none; }
+      .story-card-media {
+        aspect-ratio: 1;
+        border-radius: 3px;
+      }
+      .story-card-body { gap: 0.15rem; }
+      .story-title {
+        font-size: 0.84rem;
+        line-height: 1.28;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+      }
+      .story-date { font-size: 0.65rem; }
+
+      /* Categories: sticky chips + compact panels */
+      .categories { padding-top: 1.5rem; padding-bottom: 1.5rem; }
+      .cat-tabs {
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        gap: 0.35rem;
+        margin-bottom: 0.85rem;
+        padding-bottom: 0.2rem;
+        scrollbar-width: none;
+        position: sticky;
+        top: var(--nav-h);
+        z-index: 20;
+        background: linear-gradient(var(--mm-paper) 70%, transparent);
+        padding-top: 0.25rem;
+      }
+      .cat-tabs::-webkit-scrollbar { display: none; }
+      .cat-tab {
+        flex: 0 0 auto;
+        padding: 0.45rem 0.75rem;
+        font-size: 0.62rem;
+        white-space: nowrap;
+      }
+      .cat-rail { gap: 0.65rem; }
+      .cat-feature { aspect-ratio: 16/9; max-height: 180px; }
+      .cat-feature-meta { padding: 1.5rem 0.85rem 0.75rem; }
+      .cat-feature-meta h3 { font-size: 0.95rem; }
+      .cat-mini {
+        grid-template-columns: 64px 1fr;
+        gap: 0.65rem;
+        padding: 0.35rem 0;
+      }
+      .cat-rail .cat-mini:nth-child(n+4) { display: none; }
+      .cat-mini h4 {
+        font-size: 0.78rem;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+      }
+      .cat-view-link { margin-top: 0.75rem; }
+
+      /* Partner feature: image + copy, no empty black void */
+      .feature-story {
+        padding: 0;
+        height: auto !important;
+        min-height: 0 !important;
+      }
+      /* Kill leftover ScrollTrigger pin-spacer height from desktop */
+      .feature-story .pin-spacer {
+        height: auto !important;
+        min-height: 0 !important;
+        padding: 0 !important;
+        margin: 0 !important;
+      }
+      .feature-pin-wrap {
+        height: auto !important;
+        min-height: 0 !important;
+        transform: none !important;
+        position: relative !important;
+        top: auto !important;
+        left: auto !important;
+        width: 100% !important;
+      }
+      .feature-pin {
+        height: auto !important;
+        min-height: 0 !important;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: stretch;
+        padding: 0 0 1.5rem;
+        gap: 0;
+        max-width: none;
+      }
+      .feature-image-wrap {
+        width: 100%;
+        aspect-ratio: 16/10;
+        max-height: none;
+        border-radius: 0;
+        flex-shrink: 0;
+        order: -1;
+      }
+      .feature-image-wrap img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+      }
+      .feature-text {
+        padding: 1.15rem 1rem 0;
+        opacity: 1 !important;
+        transform: none !important;
+      }
+      .feature-text h2 {
+        font-size: 1.2rem;
+        margin-bottom: 0.85rem;
+        max-width: 22ch;
+      }
+      .feature-text .section-label { margin-bottom: 0.35rem; }
+      .feature-meta { margin-bottom: 0.5rem; font-size: 0.72rem; }
+      .feature-text .btn-magnetic {
+        padding: 0.7rem 1.1rem;
+        font-size: 0.72rem;
+      }
+
+      /* Awards: side-by-side banners */
+      section[aria-label="Marketing Mind presents"] {
+        padding-block: 1.15rem !important;
+      }
+      section[aria-label="Marketing Mind presents"] .section-inner {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 0.65rem;
+        align-items: center;
+      }
+      section[aria-label="Marketing Mind presents"] .section-label {
+        grid-column: 1 / -1;
+        margin-bottom: 0;
+      }
+
+      /* Footer: brand + 2-col links */
+      .site-footer {
+        padding: 1.75rem 1rem 1.15rem;
+      }
+      .footer-top {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1.15rem 1rem;
+        padding-bottom: 1.15rem;
+      }
+      .footer-brand {
+        grid-column: 1 / -1;
+      }
+      .footer-brand img { width: 120px; margin-bottom: 0.5rem; }
+      .footer-brand p { font-size: 0.78rem; line-height: 1.45; max-width: none; }
+      .footer-brand p + p { display: none; }
+      .footer-col h3 { margin-bottom: 0.45rem; font-size: 0.62rem; }
+      .footer-col ul { gap: 0.35rem; }
+      .footer-col a { font-size: 0.78rem; }
+      .footer-social { margin-top: 0.75rem; gap: 0.5rem; }
+      .footer-social a { width: 32px; height: 32px; }
+      .footer-social svg { width: 14px; height: 14px; }
+      .footer-bottom {
+        padding-top: 0.85rem;
+        font-size: 0.68rem;
+        gap: 0.5rem;
+      }
+
+      .nav-mobile a {
+        font-size: 1.25rem;
+        padding: 0.55rem 0;
+      }
+    }
+
+    @media (max-width: 899px) and (min-width: 768px) {
+      .section { padding: 3rem 1.25rem; }
+      .hero { min-height: 560px; height: 85vh; }
+    }
+  </style>
+</head>
+<body>
+  <!-- Imagery sourced from marketingmind.in original uploads (mirrored locally — remote hotlinking is blocked). Article links point to original URLs. -->
+
+  <div class="scroll-progress" id="scrollProgress" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-label="Page scroll progress"></div>
+
+  <!-- ========== HEADER ========== -->
+  <header class="site-header" id="siteHeader">
+    <div class="header-inner">
+      <a class="brand" href="https://marketingmind.in/" aria-label="Marketing Mind — Visit Homepage">
+        <img class="logo-white" src="https://cdn.storebox.ai/media/a9ed6896-7b9f-4a7c-8106-4c908a7e3420/180fc3f2-e851-4124-bc9c-58dea603e1aa/logo-white.png" alt="Marketing Mind" width="200" height="33" />
+        <img class="logo-black" src="https://cdn.storebox.ai/media/a9ed6896-7b9f-4a7c-8106-4c908a7e3420/46395174-bed9-4055-bb9b-f85fb6f06bf1/logo-black.png" alt="" width="200" height="49" aria-hidden="true" />
+        <span class="brand-tag">Unique | Creative | Genius</span>
+      </a>
+
+      <nav class="nav-desktop" aria-label="Primary">
+        <a class="nav-link" href="https://marketingmind.in/">Home</a>
+        <a class="nav-link" href="https://marketingmind.in/category/advertising/">Advertising</a>
+        <a class="nav-link" href="https://marketingmind.in/category/marketing/">Marketing</a>
+        <a class="nav-link" href="https://marketingmind.in/category/media/">Media</a>
+        <a class="nav-link" href="https://marketingmind.in/category/business/">Business</a>
+        <a class="nav-link" href="https://marketingmind.in/category/whats-buzzing/">What’s Buzzing</a>
+        <a class="nav-link" href="https://marketingmind.in/category/adaura-awards/">AdAura Awards</a>
+      </nav>
+
+      <div class="header-actions">
+        <a class="btn-magnetic" href="https://marketingmind.in/" data-magnetic>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 4h16v16H4z"/><path d="M4 8h16M8 4v4"/></svg>
+          Newsletter
+        </a>
+        <button class="nav-toggle" id="navToggle" aria-expanded="false" aria-controls="navMobile" aria-label="Open menu">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <nav class="nav-mobile" id="navMobile" aria-label="Mobile" hidden>
+    <button type="button" class="nav-mobile-close" id="navClose" aria-label="Close menu">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+        <path d="M6 6l12 12M18 6L6 18"/>
+      </svg>
+      <span class="nav-mobile-close-label">Close</span>
+    </button>
+    <a href="https://marketingmind.in/">Home</a>
+    <a href="https://marketingmind.in/category/advertising/">Advertising</a>
+    <a href="https://marketingmind.in/category/marketing/">Marketing</a>
+    <a href="https://marketingmind.in/category/media/">Media</a>
+    <a href="https://marketingmind.in/category/business/">Business</a>
+    <a href="https://marketingmind.in/category/whats-buzzing/">What’s Buzzing</a>
+    <a href="https://marketingmind.in/category/adaura-awards/">AdAura Awards</a>
+    <a href="https://marketingmind.in/category/more/">More</a>
+    <a href="https://marketingmind.in/about-us/">About Us</a>
+    <a href="https://marketingmind.in/contact/">Contact Us</a>
+  </nav>
+
+  <main>
+    <!-- ========== HERO — Immersive 3D Opening ========== -->
+    <section class="hero" id="hero" aria-label="Featured opening">
+      <div class="hero-vignette" aria-hidden="true"></div>
+      <div class="hero-stage" id="heroStage">
+        <div class="hero-layer hero-layer--back" data-depth="0.15">
+          <img src="https://cdn.storebox.ai/media/a9ed6896-7b9f-4a7c-8106-4c908a7e3420/ea03f213-9b69-44ed-9dd8-c6d644457eae/7-camp-1.png" alt="From Chatty AI To Golden Chicken & Birds With Holiday FOMO: 7 Campaigns That Caught Our Eye" width="736" height="524" />
+        </div>
+        <div class="hero-layer hero-layer--mid" data-depth="0.35">
+          <img src="https://cdn.storebox.ai/media/a9ed6896-7b9f-4a7c-8106-4c908a7e3420/43b4993c-c039-4705-bd53-8561ed87209a/bajaj.png" alt="‘Hamara Bajaj!’ The Marketing Story Behind India’s Iconic Scooter Campaign" width="736" height="524" />
+        </div>
+        <div class="hero-layer hero-layer--front" data-depth="0.55">
+          <img src="https://cdn.storebox.ai/media/a9ed6896-7b9f-4a7c-8106-4c908a7e3420/f3b27488-ef05-4cd2-905e-f6898c6a30fe/women-leaders.jpeg" alt="Don’t Let Imperfection Hold You Back: Akanksha Vishnoi On Taking Risks & Building A Career On Her Own Terms" width="768" height="549" />
+        </div>
+        <div class="hero-layer hero-layer--accent" data-depth="0.7">
+          <img src="https://cdn.storebox.ai/media/a9ed6896-7b9f-4a7c-8106-4c908a7e3420/aa0f6577-98a1-4c77-8a66-3b4b49183c5a/nikon.png" alt="Nikon India Unveils Durga Puja Campaign Film Featuring Nikon ZR" width="350" height="250" />
+        </div>
+      </div>
+
+      <div class="hero-content">
+        <p class="hero-eyebrow">Indian Marketing · Advertising · Media</p>
+        <h1 class="hero-title" id="heroTitle">Why India’s Next Export Engine Could Be Creativity</h1>
+        <p class="hero-dek">Discover the latest trends in marketing, advertising, startups and media.</p>
+        <a class="hero-cta" href="https://marketingmind.in/why-indias-next-export-engine-could-be-creativity/">
+          Read the story
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+        </a>
+      </div>
+
+      <div class="scroll-hint" aria-hidden="true">
+        <span>Scroll</span>
+        <div class="scroll-hint-line"></div>
+      </div>
+    </section>
+
+    <!-- ========== SCENE A — Editorial introduction ========== -->
+    <section class="section intro" id="intro" aria-labelledby="introHeading">
+      <div class="section-inner intro-grid">
+        <div>
+          <p class="section-label">Top Stories</p>
+          <h2 class="intro-headline" id="introHeading">
+            <span class="line"><span>Don’t Let Imperfection</span></span>
+            <span class="line"><span>Hold You Back</span></span>
+          </h2>
+          <p class="intro-copy">
+            Celebrating Women Leaders · 16 Oct 2026
+          </p>
+          <p style="margin-top:1.25rem">
+            <a class="view-all" href="https://marketingmind.in/dont-let-imperfection-hold-you-back-akanksha-vishnoi-on-taking-risks-building-a-career-on-her-own-terms/">
+              Read article <span aria-hidden="true">→</span>
+            </a>
+          </p>
+        </div>
+        <div class="intro-visual" id="introVisual">
+          <img
+            src="https://cdn.storebox.ai/media/a9ed6896-7b9f-4a7c-8106-4c908a7e3420/f3b27488-ef05-4cd2-905e-f6898c6a30fe/women-leaders.jpeg"
+            alt="Don’t Let Imperfection Hold You Back: Akanksha Vishnoi On Taking Risks & Building A Career On Her Own Terms"
+            width="768" height="549"
+            loading="lazy"
+          />
+          <div class="intro-visual-float">
+            <img
+              src="https://cdn.storebox.ai/media/a9ed6896-7b9f-4a7c-8106-4c908a7e3420/d0bb76d4-3571-4ce5-bc2a-7ca446b00c40/boat.png"
+              alt="boAt Launches ‘Upgrade to boAt’ Campaign Featuring Ravi Kishan, Shreya Kalra & Sufi Motiwala"
+              width="350" height="250"
+              loading="lazy"
+            />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== SCENE B — Advertising spotlight ========== -->
+    <section class="section campaigns" id="campaigns" aria-labelledby="campaignsHeading">
+      <div class="adv-pin" id="campaignsPin" data-adv-desktop>
+        <div class="adv-stage" id="advStage" aria-hidden="true">
+          <figure class="adv-slide is-active" data-adv-slide="0">
+            <img src="https://cdn.storebox.ai/media/a9ed6896-7b9f-4a7c-8106-4c908a7e3420/ea03f213-9b69-44ed-9dd8-c6d644457eae/7-camp-1.png" alt="" width="750" height="536" />
+          </figure>
+          <figure class="adv-slide" data-adv-slide="1">
+            <img src="https://cdn.storebox.ai/media/a9ed6896-7b9f-4a7c-8106-4c908a7e3420/43b4993c-c039-4705-bd53-8561ed87209a/bajaj.png" alt="" width="750" height="536" loading="lazy" />
+          </figure>
+          <figure class="adv-slide" data-adv-slide="2">
+            <img src="https://cdn.storebox.ai/media/a9ed6896-7b9f-4a7c-8106-4c908a7e3420/aa0f6577-98a1-4c77-8a66-3b4b49183c5a/nikon.png" alt="" width="350" height="250" loading="lazy" />
+          </figure>
+          <figure class="adv-slide" data-adv-slide="3">
+            <img src="https://cdn.storebox.ai/media/a9ed6896-7b9f-4a7c-8106-4c908a7e3420/d0bb76d4-3571-4ce5-bc2a-7ca446b00c40/boat.png" alt="" width="350" height="250" loading="lazy" />
+          </figure>
+          <figure class="adv-slide" data-adv-slide="4">
+            <img src="https://cdn.storebox.ai/media/a9ed6896-7b9f-4a7c-8106-4c908a7e3420/9675cb50-936d-444a-96bc-49c346f19236/swordfish.png" alt="" width="350" height="250" loading="lazy" />
+          </figure>
+          <figure class="adv-slide" data-adv-slide="5">
+            <img src="https://cdn.storebox.ai/media/a9ed6896-7b9f-4a7c-8106-4c908a7e3420/8dad3065-2074-4317-abe4-7d3888e519be/ulka.png" alt="" width="350" height="250" loading="lazy" />
+          </figure>
+          <figure class="adv-slide" data-adv-slide="6">
+            <img src="https://cdn.storebox.ai/media/a9ed6896-7b9f-4a7c-8106-4c908a7e3420/e6919bf1-edd7-479e-a601-e3dde0e2c3bd/havas.png" alt="" width="350" height="250" loading="lazy" />
+          </figure>
+          <div class="adv-stage-veil"></div>
+          <div class="adv-counter" aria-live="polite">
+            <strong id="advIndex">01</strong>
+            <span>/ 07</span>
+          </div>
+          <div class="adv-progress" aria-hidden="true"><span id="advProgressBar"></span></div>
+        </div>
+
+        <div class="adv-copy">
+          <div class="adv-copy-top">
+            <p class="section-label">Top Stories</p>
+            <h2 class="adv-kicker" id="campaignsHeading">Advertising</h2>
+            <a class="view-all adv-viewall" href="https://marketingmind.in/category/advertising/">
+              View all Advertising <span aria-hidden="true">→</span>
+            </a>
+          </div>
+
+          <div class="adv-story">
+            <p class="adv-cat" id="advCat">Advertising</p>
+            <h3 class="adv-title" id="advTitle">From Chatty AI To Golden Chicken &amp; Birds With Holiday FOMO: 7 Campaigns That Caught Our Eye</h3>
+            <p class="adv-date" id="advDate"></p>
+            <a class="adv-cta" id="advCta" href="https://marketingmind.in/from-chatty-ai-to-golden-chicken-birds-with-holiday-fomo-7-campaigns-that-caught-our-eye/">
+              Read article
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+            </a>
+            <div class="adv-dots" id="advDots" role="tablist" aria-label="Advertising stories"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Touch / narrow: horizontal story rail -->
+      <div class="adv-mobile-list" data-adv-mobile>
+        <p class="section-label">Advertising</p>
+        <h2 class="section-title">Advertising</h2>
+        <p class="adv-m-hint">Swipe for more →</p>
+        <div class="adv-m-rail" role="list">
+          <a class="adv-m-card" role="listitem" href="https://marketingmind.in/from-chatty-ai-to-golden-chicken-birds-with-holiday-fomo-7-campaigns-that-caught-our-eye/">
+            <figure><img src="https://cdn.storebox.ai/media/a9ed6896-7b9f-4a7c-8106-4c908a7e3420/ea03f213-9b69-44ed-9dd8-c6d644457eae/7-camp-1.png" alt="" width="750" height="536" loading="lazy" /></figure>
+            <p class="adv-cat">Advertising</p>
+            <h3>From Chatty AI To Golden Chicken &amp; Birds With Holiday FOMO: 7 Campaigns That Caught Our Eye</h3>
+          </a>
+          <a class="adv-m-card" role="listitem" href="https://marketingmind.in/hamara-bajaj-the-marketing-story-behind-indias-iconic-scooter-campaign/">
+            <figure><img src="https://cdn.storebox.ai/media/a9ed6896-7b9f-4a7c-8106-4c908a7e3420/43b4993c-c039-4705-bd53-8561ed87209a/bajaj.png" alt="" width="750" height="536" loading="lazy" /></figure>
+            <p class="adv-cat">Case Study</p>
+            <h3>‘Hamara Bajaj!’ The Marketing Story Behind India’s Iconic Scooter Campaign</h3>
+          </a>
+          <a class="adv-m-card" role="listitem" href="https://marketingmind.in/nikon-india-unveils-durga-puja-campaign-film-featuring-nikon-zr/">
+            <figure><img src="https://cdn.storebox.ai/media/a9ed6896-7b9f-4a7c-8106-4c908a7e3420/aa0f6577-98a1-4c77-8a66-3b4b49183c5a/nikon.png" alt="" width="350" height="250" loading="lazy" /></figure>
+            <p class="adv-cat">Advertising</p>
+            <h3>Nikon India Unveils Durga Puja Campaign Film Featuring Nikon ZR</h3>
+            <p class="adv-date">October 16, 2026</p>
+          </a>
+          <a class="adv-m-card" role="listitem" href="https://marketingmind.in/boat-launches-upgrade-to-boat-campaign-featuring-ravi-kishan-shreya-kalra-sufi-motiwala/">
+            <figure><img src="https://cdn.storebox.ai/media/a9ed6896-7b9f-4a7c-8106-4c908a7e3420/d0bb76d4-3571-4ce5-bc2a-7ca446b00c40/boat.png" alt="" width="350" height="250" loading="lazy" /></figure>
+            <p class="adv-cat">Advertising</p>
+            <h3>boAt Launches ‘Upgrade to boAt’ Campaign Featuring Ravi Kishan, Shreya Kalra &amp; Sufi Motiwala</h3>
+            <p class="adv-date">October 15, 2026</p>
+          </a>
+          <a class="adv-m-card" role="listitem" href="https://marketingmind.in/rolf-hennessy-joins-swordfish-integrated-marketing-agency-as-creative-director/">
+            <figure><img src="https://cdn.storebox.ai/media/a9ed6896-7b9f-4a7c-8106-4c908a7e3420/9675cb50-936d-444a-96bc-49c346f19236/swordfish.png" alt="" width="350" height="250" loading="lazy" /></figure>
+            <p class="adv-cat">Advertising</p>
+            <h3>Rolf Hennessy Joins Swordfish Integrated Marketing Agency As Creative Director</h3>
+            <p class="adv-date">October 16, 2026</p>
+          </a>
+          <a class="adv-m-card" role="listitem" href="https://marketingmind.in/maithili-mullick-joins-ulka-as-executive-creative-director/">
+            <figure><img src="https://cdn.storebox.ai/media/a9ed6896-7b9f-4a7c-8106-4c908a7e3420/8dad3065-2074-4317-abe4-7d3888e519be/ulka.png" alt="" width="350" height="250" loading="lazy" /></figure>
+            <p class="adv-cat">Advertising</p>
+            <h3>Maithili Mullick Joins Ulka As Executive Creative Director</h3>
+            <p class="adv-date">October 15, 2026</p>
+          </a>
+          <a class="adv-m-card" role="listitem" href="https://marketingmind.in/havas-creative-india-appoints-montu-sangha-as-head-of-bengaluru/">
+            <figure><img src="https://cdn.storebox.ai/media/a9ed6896-7b9f-4a7c-8106-4c908a7e3420/e6919bf1-edd7-479e-a601-e3dde0e2c3bd/havas.png" alt="" width="350" height="250" loading="lazy" /></figure>
+            <p class="adv-cat">Advertising</p>
+            <h3>Havas Creative India Appoints Montu Sangha As Head Of Bengaluru</h3>
+            <p class="adv-date">October 15, 2026</p>
+          </a>
+        </div>
+        <p style="margin-top:0.75rem">
+          <a class="view-all" href="https://marketingmind.in/category/advertising/" style="color:rgba(255,255,255,0.7)">View all Advertising <span aria-hidden="true">→</span></a>
+        </p>
+      </div>
+    </section>
+
+    <!-- ========== SCENE C — Latest stories ========== -->
+    <section class="section latest" id="latest" aria-labelledby="latestHeading">
+      <div class="section-inner">
+        <div class="latest-head">
+          <div>
+            <p class="section-label">Latest</p>
+            <h2 class="section-title" id="latestHeading">Latest</h2>
+          </div>
+          <a class="view-all" href="https://marketingmind.in/category/latest/">View all Latest <span aria-hidden="true">→</span></a>
+        </div>
+
+        <div class="story-grid" id="storyGrid">
+          <a class="story-card" href="https://marketingmind.in/fssai-takes-legal-action-against-priyagold-biscuits-dodla-dairy-ueir-organic-foods/" data-tilt>
+            <div class="story-card-media">
+              <img src="https://cdn.storebox.ai/media/a9ed6896-7b9f-4a7c-8106-4c908a7e3420/32089b69-6c08-4c80-b581-137a0a42e8cc/priyagold.png" alt="FSSAI Takes Legal Action Against Priyagold Biscuits, Dodla Dairy & UEIR Organic Foods" width="360" height="180" loading="lazy" />
+            </div>
+            <div class="story-card-body">
+              <span class="story-cat">Latest</span>
+              <h3 class="story-title">FSSAI Takes Legal Action Against Priyagold Biscuits, Dodla Dairy &amp; UEIR Organic Foods</h3>
+              <time class="story-date" datetime="2026-10-19">October 19, 2026</time>
+            </div>
+          </a>
+
+          <a class="story-card" href="https://marketingmind.in/cheil-india-appoints-neha-shrivastava-as-vice-president-head-of-digital/" data-tilt>
+            <div class="story-card-media">
+              <img src="https://cdn.storebox.ai/media/a9ed6896-7b9f-4a7c-8106-4c908a7e3420/1fea739e-71b6-4704-8d32-67a699560644/cheil.png" alt="Cheil India Appoints Neha Shrivastava As Vice President, Head Of Digital" width="360" height="258" loading="lazy" />
+            </div>
+            <div class="story-card-body">
+              <span class="story-cat">People Spotting</span>
+              <h3 class="story-title">Cheil India Appoints Neha Shrivastava As Vice President, Head Of Digital</h3>
+              <time class="story-date" datetime="2026-10-19">October 19, 2026</time>
+            </div>
+          </a>
+
+          <a class="story-card" href="https://marketingmind.in/capgemini-elevates-mihir-pradhan-as-vp/" data-tilt>
+            <div class="story-card-media">
+              <img src="https://cdn.storebox.ai/media/a9ed6896-7b9f-4a7c-8106-4c908a7e3420/235a3198-861e-420f-a515-8ba4b0e94233/cape.png" alt="Capgemini Elevates Mihir Pradhan As VP" width="360" height="258" loading="lazy" />
+            </div>
+            <div class="story-card-body">
+              <span class="story-cat">Business</span>
+              <h3 class="story-title">Capgemini Elevates Mihir Pradhan As VP</h3>
+              <time class="story-date" datetime="2026-10-19">October 19, 2026</time>
+            </div>
+          </a>
+
+          <a class="story-card" href="https://marketingmind.in/meity-directs-meta-to-review-misleading-content-recommendations-on-facebook-instagram/" data-tilt>
+            <div class="story-card-media">
+              <img src="https://cdn.storebox.ai/media/a9ed6896-7b9f-4a7c-8106-4c908a7e3420/56f58576-bce4-44c8-ad12-a7e02408c76a/meity.jpeg" alt="MeitY Directs Meta To Review Misleading Content Recommendations On Facebook, Instagram" width="360" height="258" loading="lazy" />
+            </div>
+            <div class="story-card-body">
+              <span class="story-cat">Media</span>
+              <h3 class="story-title">MeitY Directs Meta To Review Misleading Content Recommendations On Facebook, Instagram</h3>
+              <time class="story-date" datetime="2026-10-19">October 19, 2026</time>
+            </div>
+          </a>
+
+          <a class="story-card" href="https://marketingmind.in/media-care-bags-integrated-marketing-mandate-for-velvetree/" data-tilt>
+            <div class="story-card-media">
+              <img src="https://cdn.storebox.ai/media/a9ed6896-7b9f-4a7c-8106-4c908a7e3420/715cd432-b475-48b8-8640-3ee5cd887f51/mediacare.png" alt="Media Care Bags Integrated Marketing Mandate For Velvetree" width="360" height="258" loading="lazy" />
+            </div>
+            <div class="story-card-body">
+              <span class="story-cat">Marketing</span>
+              <h3 class="story-title">Media Care Bags Integrated Marketing Mandate For Velvetree</h3>
+              <time class="story-date" datetime="2026-10-19">October 19, 2026</time>
+            </div>
+          </a>
+
+          <a class="story-card" href="https://marketingmind.in/havas-creative-india-appoints-montu-sangha-as-head-of-bengaluru/" data-tilt>
+            <div class="story-card-media">
+              <img src="https://cdn.storebox.ai/media/a9ed6896-7b9f-4a7c-8106-4c908a7e3420/e6919bf1-edd7-479e-a601-e3dde0e2c3bd/havas.png" alt="Havas Creative India Appoints Montu Sangha As Head Of Bengaluru" width="350" height="250" loading="lazy" />
+            </div>
+            <div class="story-card-body">
+              <span class="story-cat">Advertising</span>
+              <h3 class="story-title">Havas Creative India Appoints Montu Sangha As Head Of Bengaluru</h3>
+              <time class="story-date" datetime="2026-10-15">October 15, 2026</time>
+            </div>
+          </a>
+
+          <a class="story-card" href="https://marketingmind.in/netflix-names-peter-rice-as-cco-as-bela-bajaria-steps-down-after-a-decade/" data-tilt>
+            <div class="story-card-media">
+              <img src="https://cdn.storebox.ai/media/a9ed6896-7b9f-4a7c-8106-4c908a7e3420/7a6b68f8-10e2-4b6b-a5b2-f55bca2ec398/netflix.png" alt="Netflix Names Peter Rice As CCO As Bela Bajaria Steps Down After A Decade" width="350" height="250" loading="lazy" />
+            </div>
+            <div class="story-card-body">
+              <span class="story-cat">Media</span>
+              <h3 class="story-title">Netflix Names Peter Rice As CCO As Bela Bajaria Steps Down After A Decade</h3>
+              <time class="story-date" datetime="2026-10-16">October 16, 2026</time>
+            </div>
+          </a>
+
+          <a class="story-card" href="https://marketingmind.in/2-lakh-followers-in-a-day-what-is-virat-kohli-really-building-on-linkedin/" data-tilt>
+            <div class="story-card-media">
+              <img src="https://cdn.storebox.ai/media/a9ed6896-7b9f-4a7c-8106-4c908a7e3420/7e82f58f-6dca-4ab3-ada7-3db5afca23fa/virat.png" alt="2 Lakh Followers In A Day! What Is Virat Kohli Really Building On LinkedIn?" width="350" height="250" loading="lazy" />
+            </div>
+            <div class="story-card-body">
+              <span class="story-cat">What’s Buzzing</span>
+              <h3 class="story-title">2 Lakh Followers In A Day! What Is Virat Kohli Really Building On LinkedIn?</h3>
+              <time class="story-date" datetime="2026-10-14">October 14, 2026</time>
+            </div>
+          </a>
+
+          <a class="story-card" href="https://marketingmind.in/reliance-industries-says-it-welcomes-starlink-competition-denies-blocking-entry-into-india/" data-tilt>
+            <div class="story-card-media">
+              <img src="https://cdn.storebox.ai/media/a9ed6896-7b9f-4a7c-8106-4c908a7e3420/9592c704-4d8e-462b-bd4e-a0a89b3acb87/reliance.png" alt="Reliance Industries Says It Welcomes Starlink Competition, Denies Blocking Entry Into India" width="350" height="250" loading="lazy" />
+            </div>
+            <div class="story-card-body">
+              <span class="story-cat">What’s Buzzing</span>
+              <h3 class="story-title">Reliance Industries Says It Welcomes Starlink Competition, Denies Blocking Entry Into India</h3>
+              <time class="story-date" datetime="2026-10-16">October 16, 2026</time>
+            </div>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== SCENE D — Category exploration ========== -->
+    <section class="section categories" id="categories" aria-labelledby="categoriesHeading">
+      <div class="section-inner">
+        <p class="section-label">Explore</p>
+        <h2 class="section-title" id="categoriesHeading">Explore</h2>
+
+        <div class="cat-tabs" role="tablist" aria-label="Editorial categories">
+          <button class="cat-tab" role="tab" id="tab-adv" aria-selected="true" aria-controls="panel-adv" data-cat="adv">Advertising</button>
+          <button class="cat-tab" role="tab" id="tab-mkt" aria-selected="false" aria-controls="panel-mkt" data-cat="mkt">Marketing</button>
+          <button class="cat-tab" role="tab" id="tab-media" aria-selected="false" aria-controls="panel-media" data-cat="media">Media</button>
+          <button class="cat-tab" role="tab" id="tab-biz" aria-selected="false" aria-controls="panel-biz" data-cat="biz">Business</button>
+          <button class="cat-tab" role="tab" id="tab-buzz" aria-selected="false" aria-controls="panel-buzz" data-cat="buzz">What’s Buzzing</button>
+          <button class="cat-tab" role="tab" id="tab-experts" aria-selected="false" aria-controls="panel-experts" data-cat="experts">Experts Speak</button>
+        </div>
+
+        <!-- Advertising -->
+        <div class="cat-panel is-active" role="tabpanel" id="panel-adv" aria-labelledby="tab-adv">
+          <div class="cat-rail">
+            <a class="cat-feature" href="https://marketingmind.in/nikon-india-unveils-durga-puja-campaign-film-featuring-nikon-zr/">
+              <img src="https://cdn.storebox.ai/media/a9ed6896-7b9f-4a7c-8106-4c908a7e3420/aa0f6577-98a1-4c77-8a66-3b4b49183c5a/nikon.png" alt="Nikon India Unveils Durga Puja Campaign Film Featuring Nikon ZR" width="700" height="500" loading="lazy" />
+              <div class="cat-feature-meta">
+                <p class="campaign-card-cat">Advertising</p>
+                <h3>Nikon India Unveils Durga Puja Campaign Film Featuring Nikon ZR</h3>
+              </div>
+            </a>
+            <a class="cat-mini" href="https://marketingmind.in/rolf-hennessy-joins-swordfish-integrated-marketing-agency-as-creative-director/">
+              <div class="cat-mini-img"><img src="https://cdn.storebox.ai/media/a9ed6896-7b9f-4a7c-8106-4c908a7e3420/9675cb50-936d-444a-96bc-49c346f19236/swordfish.png" alt="" width="120" height="90" loading="lazy" /></div>
+              <div>
+                <h4>Rolf Hennessy Joins Swordfish Integrated Marketing Agency As Creative Director</h4>
+                <time datetime="2026-10-16">October 16, 2026</time>
+              </div>
+            </a>
+            <a class="cat-mini" href="https://marketingmind.in/maithili-mullick-joins-ulka-as-executive-creative-director/">
+              <div class="cat-mini-img"><img src="https://cdn.storebox.ai/media/a9ed6896-7b9f-4a7c-8106-4c908a7e3420/8dad3065-2074-4317-abe4-7d3888e519be/ulka.png" alt="" width="120" height="90" loading="lazy" /></div>
+              <div>
+                <h4>Maithili Mullick Joins Ulka As Executive Creative Director</h4>
+                <time datetime="2026-10-15">October 15, 2026</time>
+              </div>
+            </a>
+            <a class="cat-mini" href="https://marketingmind.in/boat-launches-upgrade-to-boat-campaign-featuring-ravi-kishan-shreya-kalra-sufi-motiwala/">
+              <div class="cat-mini-img"><img src="https://cdn.storebox.ai/media/a9ed6896-7b9f-4a7c-8106-4c908a7e3420/d0bb76d4-3571-4ce5-bc2a-7ca446b00c40/boat.png" alt="" width="120" height="90" loading="lazy" /></div>
+              <div>
+                <h4>boAt Launches ‘Upgrade to boAt’ Campaign Featuring Ravi Kishan, Shreya Kalra &amp; Sufi Motiwala</h4>
+                <time datetime="2026-10-15">October 15, 2026</time>
+              </div>
+            </a>
+            <a class="cat-mini" href="https://marketingmind.in/havas-creative-india-appoints-montu-sangha-as-head-of-bengaluru/">
+              <div class="cat-mini-img"><img src="https://cdn.storebox.ai/media/a9ed6896-7b9f-4a7c-8106-4c908a7e3420/e6919bf1-edd7-479e-a601-e3dde0e2c3bd/havas.png" alt="" width="120" height="90" loading="lazy" /></div>
+              <div>
+                <h4>Havas Creative India Appoints Montu Sangha As Head Of Bengaluru</h4>
+                <time datetime="2026-10-15">October 15, 2026</time>
+              </div>
+            </a>
+          </div>
+          <p class="cat-view-link"><a class="view-all" href="https://marketingmind.in/category/advertising/">View all Advertising <span aria-hidden="true">→</span></a></p>
+        </div>
+
+        <!-- Marketing -->
+        <div class="cat-panel" role="tabpanel" id="panel-mkt" aria-labelledby="tab-mkt" hidden>
+          <div class="cat-rail">
+            <a class="cat-feature" href="https://marketingmind.in/leysha-basmati-rice-appoints-yami-gautam-dhar-as-brand-ambassador/">
+              <img src="https://cdn.storebox.ai/media/a9ed6896-7b9f-4a7c-8106-4c908a7e3420/b69dd580-a4d4-437b-a34e-8cb9496e76fa/leysha.png" alt="Leysha Basmati Rice Appoints Yami Gautam Dhar As Brand Ambassador" width="700" height="500" loading="lazy" />
+              <div class="cat-feature-meta">
+                <p class="campaign-card-cat">Marketing</p>
+                <h3>Leysha Basmati Rice Appoints Yami Gautam Dhar As Brand Ambassador</h3>
+              </div>
+            </a>
+            <a class="cat-mini" href="https://marketingmind.in/sc-seeks-centres-response-on-plea-to-ban-social-media-for-children/">
+              <div class="cat-mini-img"><img src="https://cdn.storebox.ai/media/a9ed6896-7b9f-4a7c-8106-4c908a7e3420/efae6684-d75d-489f-97a0-44261e344f71/sc-social.png" alt="" width="120" height="90" loading="lazy" /></div>
+              <div>
+                <h4>SC Seeks Centre’s Response On Plea To Ban Social Media For Children</h4>
+                <time datetime="2026-10-16">October 16, 2026</time>
+              </div>
+            </a>
+            <a class="cat-mini" href="https://marketingmind.in/mamonde-signs-nitanshi-goel-as-its-first-brand-ambassador-in-india/">
+              <div class="cat-mini-img"><img src="https://cdn.storebox.ai/media/a9ed6896-7b9f-4a7c-8106-4c908a7e3420/828cc2e2-583c-4722-a1d6-58a24c5e5079/mamonde.png" alt="" width="120" height="90" loading="lazy" /></div>
+              <div>
+                <h4>Mamonde Signs Nitanshi Goel As Its First Brand Ambassador In India</h4>
+                <time datetime="2026-10-16">October 16, 2026</time>
+              </div>
+            </a>
+            <a class="cat-mini" href="https://marketingmind.in/delhi-hc-questions-fssai-notice-against-emamis-healthy-tasty-brand/">
+              <div class="cat-mini-img"><img src="https://cdn.storebox.ai/media/a9ed6896-7b9f-4a7c-8106-4c908a7e3420/20acb7fc-16df-49fa-a0af-4a490a8dbae4/emami.png" alt="" width="120" height="90" loading="lazy" /></div>
+              <div>
+                <h4>Delhi HC Questions FSSAI Notice Against Emami’s ‘Healthy &amp; Tasty’ Brand</h4>
+                <time datetime="2026-10-16">October 16, 2026</time>
+              </div>
+            </a>
+            <a class="cat-mini" href="https://marketingmind.in/magicbricks-appoints-mayank-jain-as-ceo/">
+              <div class="cat-mini-img"><img src="https://cdn.storebox.ai/media/a9ed6896-7b9f-4a7c-8106-4c908a7e3420/5137de1c-30d5-458a-9fb4-4fbc50fd4a15/magicbricks.png" alt="" width="120" height="90" loading="lazy" /></div>
+              <div>
+                <h4>Magicbricks Appoints Mayank Jain As CEO</h4>
+                <time datetime="2026-10-16">October 16, 2026</time>
+              </div>
+            </a>
+          </div>
+          <p class="cat-view-link"><a class="view-all" href="https://marketingmind.in/category/marketing/">View all Marketing <span aria-hidden="true">→</span></a></p>
+        </div>
+
+        <!-- Media -->
+        <div class="cat-panel" role="tabpanel" id="panel-media" aria-labelledby="tab-media" hidden>
+          <div class="cat-rail">
+            <a class="cat-feature" href="https://marketingmind.in/netflix-names-peter-rice-as-cco-as-bela-bajaria-steps-down-after-a-decade/">
+              <img src="https://cdn.storebox.ai/media/a9ed6896-7b9f-4a7c-8106-4c908a7e3420/7a6b68f8-10e2-4b6b-a5b2-f55bca2ec398/netflix.png" alt="Netflix Names Peter Rice As CCO As Bela Bajaria Steps Down After A Decade" width="700" height="500" loading="lazy" />
+              <div class="cat-feature-meta">
+                <p class="campaign-card-cat">Media</p>
+                <h3>Netflix Names Peter Rice As CCO As Bela Bajaria Steps Down After A Decade</h3>
+              </div>
+            </a>
+            <a class="cat-mini" href="https://marketingmind.in/cnn-axios-other-publishers-join-googles-ai-news-programme/">
+              <div class="cat-mini-img"><img src="https://cdn.storebox.ai/media/a9ed6896-7b9f-4a7c-8106-4c908a7e3420/6d5ca7eb-e429-45f2-97ef-55433537a9f4/google-ai.png" alt="" width="120" height="90" loading="lazy" /></div>
+              <div>
+                <h4>CNN, Axios &amp; Other Publishers Join Google’s AI News Programme</h4>
+                <time datetime="2026-10-16">October 16, 2026</time>
+              </div>
+            </a>
+            <a class="cat-mini" href="https://marketingmind.in/google-ads-rolls-out-new-controls-for-channel-prioritisation-ad-spend/">
+              <div class="cat-mini-img"><img src="https://cdn.storebox.ai/media/a9ed6896-7b9f-4a7c-8106-4c908a7e3420/2b889e32-d896-4212-8e80-c7cb694f8ae3/google-ads.png" alt="" width="120" height="90" loading="lazy" /></div>
+              <div>
+                <h4>Google Ads Rolls Out New Controls For Channel Prioritisation &amp; Ad Spend</h4>
+                <time datetime="2026-10-15">October 15, 2026</time>
+              </div>
+            </a>
+            <a class="cat-mini" href="https://marketingmind.in/whatsapp-now-allows-calls-without-an-account-plans-google-outlook-calendar-integration/">
+              <div class="cat-mini-img"><img src="https://cdn.storebox.ai/media/a9ed6896-7b9f-4a7c-8106-4c908a7e3420/4eb3b0bb-cc22-4d88-bbef-42c37f11df9e/whatsapp.png" alt="" width="120" height="90" loading="lazy" /></div>
+              <div>
+                <h4>WhatsApp Now Allows Calls Without An Account, Plans Google &amp; Outlook Calendar Integration</h4>
+                <time datetime="2026-10-15">October 15, 2026</time>
+              </div>
+            </a>
+            <a class="cat-mini" href="https://marketingmind.in/meity-directs-meta-to-review-misleading-content-recommendations-on-facebook-instagram/">
+              <div class="cat-mini-img"><img src="https://cdn.storebox.ai/media/a9ed6896-7b9f-4a7c-8106-4c908a7e3420/56f58576-bce4-44c8-ad12-a7e02408c76a/meity.jpeg" alt="" width="120" height="90" loading="lazy" /></div>
+              <div>
+                <h4>MeitY Directs Meta To Review Misleading Content Recommendations On Facebook, Instagram</h4>
+                <time datetime="2026-10-19">October 19, 2026</time>
+              </div>
+            </a>
+          </div>
+          <p class="cat-view-link"><a class="view-all" href="https://marketingmind.in/category/media/">View all Media <span aria-hidden="true">→</span></a></p>
+        </div>
+
+        <!-- Business -->
+        <div class="cat-panel" role="tabpanel" id="panel-biz" aria-labelledby="tab-biz" hidden>
+          <div class="cat-rail">
+            <a class="cat-feature" href="https://marketingmind.in/vini-cosmetics-appoints-manoj-gadgil-as-ceo/">
+              <img src="https://cdn.storebox.ai/media/a9ed6896-7b9f-4a7c-8106-4c908a7e3420/1da5aa88-66bb-4e80-8f42-b478c4bfa938/vini.png" alt="Vini Cosmetics Appoints Manoj Gadgil As CEO" width="700" height="500" loading="lazy" />
+              <div class="cat-feature-meta">
+                <p class="campaign-card-cat">Business</p>
+                <h3>Vini Cosmetics Appoints Manoj Gadgil As CEO</h3>
+              </div>
+            </a>
+            <a class="cat-mini" href="https://marketingmind.in/wpp-appoints-adam-gerhart-as-global-cco/">
+              <div class="cat-mini-img"><img src="https://cdn.storebox.ai/media/a9ed6896-7b9f-4a7c-8106-4c908a7e3420/cc5c7f04-6159-4000-b2f4-2f7a09fa5462/wpp.png" alt="" width="120" height="90" loading="lazy" /></div>
+              <div>
+                <h4>WPP Appoints Adam Gerhart As Global CCO</h4>
+                <time datetime="2026-10-15">October 15, 2026</time>
+              </div>
+            </a>
+            <a class="cat-mini" href="https://marketingmind.in/devans-appoints-vikas-bhatia-as-coo/">
+              <div class="cat-mini-img"><img src="https://cdn.storebox.ai/media/a9ed6896-7b9f-4a7c-8106-4c908a7e3420/2420c20a-bea9-4237-a1ac-9b3945180852/devans.png" alt="" width="120" height="90" loading="lazy" /></div>
+              <div>
+                <h4>DeVANS Appoints Vikas Bhatia As COO</h4>
+                <time datetime="2026-10-14">October 14, 2026</time>
+              </div>
+            </a>
+            <a class="cat-mini" href="https://marketingmind.in/rohit-chordia-joins-airtel-as-group-cso/">
+              <div class="cat-mini-img"><img src="https://cdn.storebox.ai/media/a9ed6896-7b9f-4a7c-8106-4c908a7e3420/ad8eb4e3-62de-477d-8a8a-fdf782373f0b/airtel.png" alt="" width="120" height="90" loading="lazy" /></div>
+              <div>
+                <h4>Rohit Chordia Joins Airtel As Group CSO</h4>
+                <time datetime="2026-10-14">October 14, 2026</time>
+              </div>
+            </a>
+            <a class="cat-mini" href="https://marketingmind.in/capgemini-elevates-mihir-pradhan-as-vp/">
+              <div class="cat-mini-img"><img src="https://cdn.storebox.ai/media/a9ed6896-7b9f-4a7c-8106-4c908a7e3420/235a3198-861e-420f-a515-8ba4b0e94233/cape.png" alt="" width="120" height="90" loading="lazy" /></div>
+              <div>
+                <h4>Capgemini Elevates Mihir Pradhan As VP</h4>
+                <time datetime="2026-10-19">October 19, 2026</time>
+              </div>
+            </a>
+          </div>
+          <p class="cat-view-link"><a class="view-all" href="https://marketingmind.in/category/business/">View all Business <span aria-hidden="true">→</span></a></p>
+        </div>
+
+        <!-- What's Buzzing -->
+        <div class="cat-panel" role="tabpanel" id="panel-buzz" aria-labelledby="tab-buzz" hidden>
+          <div class="cat-rail">
+            <a class="cat-feature" href="https://marketingmind.in/reliance-industries-says-it-welcomes-starlink-competition-denies-blocking-entry-into-india/">
+              <img src="https://cdn.storebox.ai/media/a9ed6896-7b9f-4a7c-8106-4c908a7e3420/9592c704-4d8e-462b-bd4e-a0a89b3acb87/reliance.png" alt="Reliance Industries Says It Welcomes Starlink Competition, Denies Blocking Entry Into India" width="700" height="500" loading="lazy" />
+              <div class="cat-feature-meta">
+                <p class="campaign-card-cat">What’s Buzzing</p>
+                <h3>Reliance Industries Says It Welcomes Starlink Competition, Denies Blocking Entry Into India</h3>
+              </div>
+            </a>
+            <a class="cat-mini" href="https://marketingmind.in/linkedin-top-startups-2026-zepto-leads-the-list-of-20-indian-companies-on-the-rise/">
+              <div class="cat-mini-img"><img src="https://cdn.storebox.ai/media/a9ed6896-7b9f-4a7c-8106-4c908a7e3420/9359f190-00ed-41ec-adc2-e05785196876/linkedin-startups.png" alt="" width="120" height="90" loading="lazy" /></div>
+              <div>
+                <h4>LinkedIn Top Startups 2026: Zepto Leads The List Of 20 Indian Companies On The Rise</h4>
+                <time datetime="2026-10-15">October 15, 2026</time>
+              </div>
+            </a>
+            <a class="cat-mini" href="https://marketingmind.in/2-lakh-followers-in-a-day-what-is-virat-kohli-really-building-on-linkedin/">
+              <div class="cat-mini-img"><img src="https://cdn.storebox.ai/media/a9ed6896-7b9f-4a7c-8106-4c908a7e3420/7e82f58f-6dca-4ab3-ada7-3db5afca23fa/virat.png" alt="" width="120" height="90" loading="lazy" /></div>
+              <div>
+                <h4>2 Lakh Followers In A Day! What Is Virat Kohli Really Building On LinkedIn?</h4>
+                <time datetime="2026-10-14">October 14, 2026</time>
+              </div>
+            </a>
+            <a class="cat-mini" href="https://marketingmind.in/coca-colas-powerade-turns-novigs-just-sports-into-never-just-sports-amid-sydney-sweeney-ad-controversy/">
+              <div class="cat-mini-img"><img src="https://cdn.storebox.ai/media/a9ed6896-7b9f-4a7c-8106-4c908a7e3420/31c7f989-de87-488a-b125-6c74f9ca2346/powerade.png" alt="" width="120" height="90" loading="lazy" /></div>
+              <div>
+                <h4>Coca-Cola’s Powerade Turns Novig’s ‘Just Sports’ Into ‘Never Just Sports’ Amid Sydney Sweeney Ad Controversy</h4>
+                <time datetime="2026-10-14">October 14, 2026</time>
+              </div>
+            </a>
+            <a class="cat-mini" href="https://marketingmind.in/79-percent-of-indian-shoppers-doubt-a-brand-they-cant-find-on-google-report/">
+              <div class="cat-mini-img"><img src="https://cdn.storebox.ai/media/a9ed6896-7b9f-4a7c-8106-4c908a7e3420/2ee9e310-6b8e-4171-81f8-1456b8468cc0/google-shoppers.png" alt="" width="120" height="90" loading="lazy" /></div>
+              <div>
+                <h4>79% Of Indian Shoppers Doubt A Brand They Can’t Find On Google: Report</h4>
+                <time datetime="2026-10-14">October 14, 2026</time>
+              </div>
+            </a>
+          </div>
+          <p class="cat-view-link"><a class="view-all" href="https://marketingmind.in/category/whats-buzzing/">View all What’s Buzzing <span aria-hidden="true">→</span></a></p>
+        </div>
+
+        <!-- Experts Speak -->
+        <div class="cat-panel" role="tabpanel" id="panel-experts" aria-labelledby="tab-experts" hidden>
+          <div class="cat-rail">
+            <a class="cat-feature" href="https://marketingmind.in/dont-let-imperfection-hold-you-back-akanksha-vishnoi-on-taking-risks-building-a-career-on-her-own-terms/">
+              <img src="https://cdn.storebox.ai/media/a9ed6896-7b9f-4a7c-8106-4c908a7e3420/f3b27488-ef05-4cd2-905e-f6898c6a30fe/women-leaders.jpeg" alt="Don’t Let Imperfection Hold You Back: Akanksha Vishnoi On Taking Risks & Building A Career On Her Own Terms" width="768" height="549" loading="lazy" />
+              <div class="cat-feature-meta">
+                <p class="campaign-card-cat">Experts Speak</p>
+                <h3>Don’t Let Imperfection Hold You Back: Akanksha Vishnoi On Taking Risks &amp; Building A Career On Her Own Terms</h3>
+              </div>
+            </a>
+            <a class="cat-mini" href="https://marketingmind.in/i-would-always-want-to-stay-curious-amazon-ads-priyanka-khaneja-gandhi-on-why-having-all-the-answers-isnt-the-point/">
+              <div class="cat-mini-img"><img src="https://cdn.storebox.ai/media/a9ed6896-7b9f-4a7c-8106-4c908a7e3420/e077effc-2834-4ee5-8d6a-db348f87f7de/priyanka.jpeg" alt="" width="120" height="90" loading="lazy" /></div>
+              <div>
+                <h4>I Would Always Want To Stay Curious: Amazon Ads’ Priyanka Khaneja Gandhi On Why Having All The Answers Isn’t The Point</h4>
+                <time datetime="2026-09-04">September 4, 2026</time>
+              </div>
+            </a>
+            <a class="cat-mini" href="https://marketingmind.in/unless-you-speak-up-people-dont-know-about-your-challenges-debasree-dasgupta-on-finding-her-voice/">
+              <div class="cat-mini-img"><img src="https://cdn.storebox.ai/media/a9ed6896-7b9f-4a7c-8106-4c908a7e3420/525dcb7a-9628-46d5-ae6c-9f12686aa03b/debasree.jpeg" alt="" width="120" height="90" loading="lazy" /></div>
+              <div>
+                <h4>Unless You Speak Up, People Don’t Know About Your Challenges: Debasree Dasgupta On Finding Her Voice</h4>
+              </div>
+            </a>
+            <a class="cat-mini" href="https://marketingmind.in/passion-is-something-that-cannot-be-taught-medhavi-nain-on-why-talent-alone-is-never-enough/">
+              <div class="cat-mini-img"><img src="https://cdn.storebox.ai/media/a9ed6896-7b9f-4a7c-8106-4c908a7e3420/e59fd55e-2da1-475d-a6b9-0fae28e43555/medhavi.jpeg" alt="" width="120" height="90" loading="lazy" /></div>
+              <div>
+                <h4>Passion Is Something That Cannot Be Taught: Medhavi Nain On Why Talent Alone Is Never Enough</h4>
+              </div>
+            </a>
+            <a class="cat-mini" href="https://marketingmind.in/ai-has-made-marketing-faster-but-has-it-made-it-better/">
+              <div class="cat-mini-img"><img src="https://cdn.storebox.ai/media/a9ed6896-7b9f-4a7c-8106-4c908a7e3420/bcaa1b9e-af69-4538-a30f-f60e55409856/ai-marketing.png" alt="" width="120" height="90" loading="lazy" /></div>
+              <div>
+                <h4>AI Has Made Marketing Faster, But Has It Made It Better?</h4>
+              </div>
+            </a>
+          </div>
+          <p class="cat-view-link"><a class="view-all" href="https://marketingmind.in/category/experts-speak/">View all Experts Speak <span aria-hidden="true">→</span></a></p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== SCENE E — Featured story cinematic pin ========== -->
+    <section class="feature-story" id="featureStory" aria-labelledby="featureHeading">
+      <div class="feature-pin-wrap" id="featurePinWrap">
+        <div class="feature-pin" id="featurePin">
+          <div class="feature-image-wrap" id="featureImage">
+            <img
+              src="https://cdn.storebox.ai/media/a9ed6896-7b9f-4a7c-8106-4c908a7e3420/6c371bb2-cafa-4fe2-81e6-8218046e24b0/tata-trucks.png"
+              alt="With 17 New Trucks, Here’s How Tata Motors Commercial Vehicles Is Betting on the Future of Logistics"
+              width="700" height="500"
+              loading="lazy"
+            />
+          </div>
+          <div class="feature-text" id="featureText">
+            <p class="section-label">Partner Content</p>
+            <p class="feature-meta">January 21, 2026</p>
+            <h2 id="featureHeading">With 17 New Trucks, Here’s How Tata Motors Commercial Vehicles Is Betting on the Future of Logistics</h2>
+            <a class="btn-magnetic" href="https://marketingmind.in/with-17-new-trucks-heres-how-tata-motors-commercial-vehicles-is-betting-on-the-future-of-logistics/" data-magnetic>
+              Read article
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- AdAura / Millennial strip -->
+    <section class="section" style="background:var(--mm-white);padding-block:3rem" aria-label="Marketing Mind presents">
+      <div class="section-inner" style="display:grid;gap:1.25rem">
+        <p class="section-label">Marketing Mind presents</p>
+        <a href="https://adauraawards.com/enter" style="display:block;border-radius:4px;overflow:hidden">
+          <img src="https://cdn.storebox.ai/media/a9ed6896-7b9f-4a7c-8106-4c908a7e3420/da0a3225-b4bb-4109-81ff-db90f736ba0a/adaura-banner.jpeg" alt="AdAura Awards 2026 banner: enter your work now" width="2048" height="218" loading="lazy" style="width:100%;height:auto" />
+        </a>
+        <a href="https://events.marketingmind.in/" style="display:block;border-radius:4px;overflow:hidden">
+          <img src="https://cdn.storebox.ai/media/a9ed6896-7b9f-4a7c-8106-4c908a7e3420/1591a063-ee40-4ef0-a5ff-000daf4534fb/millennial.webp" alt="Millennial Achievers Awards banner" width="1024" height="173" loading="lazy" style="width:100%;height:auto" />
+        </a>
+      </div>
+    </section>
+  </main>
+
+  <!-- ========== SCENE F — Footer ========== -->
+  <footer class="site-footer" id="footer">
+    <div class="footer-inner">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <img src="https://cdn.storebox.ai/media/a9ed6896-7b9f-4a7c-8106-4c908a7e3420/180fc3f2-e851-4124-bc9c-58dea603e1aa/logo-white.png" alt="Marketing Mind" width="200" height="33" loading="lazy" />
+          <p>Discover the latest trends in marketing, advertising, startups and media.</p>
+          <p style="margin-top:0.75rem">Marketing Mind is an Indian news platform covering marketing, advertising, media and startups.</p>
+          <div class="footer-social">
+            <a href="https://www.facebook.com/MarketingMind.in/" aria-label="Find us on Facebook">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 9h3V6h-3c-1.7 0-3 1.3-3 3v2H8v3h3v7h3v-7h3l1-3h-4V9c0-.6.4-1 1-1z"/></svg>
+            </a>
+            <a href="https://twitter.com/MarketingMind_" aria-label="Find us on Twitter">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18.2 2H21l-6.5 7.4L22 22h-6.2l-4.9-6.4L5.4 22H2.6l7-8L2 2h6.4l4.4 5.8L18.2 2zm-1.1 18h1.7L7 3.9H5.2L17.1 20z"/></svg>
+            </a>
+            <a href="https://www.instagram.com/marketingmind.in/" aria-label="Find us on Instagram">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 2h10a5 5 0 015 5v10a5 5 0 01-5 5H7a5 5 0 01-5-5V7a5 5 0 015-5zm10 2H7a3 3 0 00-3 3v10a3 3 0 003 3h10a3 3 0 003-3V7a3 3 0 00-3-3zm-5 3.5A4.5 4.5 0 1112 16.5 4.5 4.5 0 0112 7.5zm0 2A2.5 2.5 0 1014.5 12 2.5 2.5 0 0012 9.5zM17.5 6a1 1 0 11-1 1 1 1 0 011-1z"/></svg>
+            </a>
+            <a href="https://www.youtube.com/channel/UCLQpLoutS4sdso20nLQnuiA" aria-label="Find us on Youtube">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M23 12.2s0-3.2-.4-4.7a2.9 2.9 0 00-2-2C18.8 5 12 5 12 5s-6.8 0-8.6.5a2.9 2.9 0 00-2 2C1 9 1 12.2 1 12.2s0 3.2.4 4.7a2.9 2.9 0 002 2C5.2 19.4 12 19.4 12 19.4s6.8 0 8.6-.5a2.9 2.9 0 002-2c.4-1.5.4-4.7.4-4.7zM9.8 15.5v-6.6l5.8 3.3-5.8 3.3z"/></svg>
+            </a>
+            <a href="https://www.linkedin.com/company/marketingmindin/" aria-label="Find us on LinkedIn">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.5 8.5H3V21h3.5V8.5zM4.8 3A2 2 0 104.8 7a2 2 0 000-4zM21 21h-3.5v-6.1c0-1.5-.5-2.5-1.9-2.5-1 0-1.6.7-1.9 1.4-.1.2-.1.5-.1.8V21H10V8.5h3.4v1.7c.5-.7 1.3-1.8 3.2-1.8 2.3 0 4.1 1.5 4.1 4.8V21z"/></svg>
+            </a>
+          </div>
+        </div>
+
+        <div class="footer-col">
+          <h3>Explore</h3>
+          <ul>
+            <li><a href="https://marketingmind.in/about-us/">About Us</a></li>
+            <li><a href="https://events.marketingmind.in/">Millennial Achievers</a></li>
+            <li><a href="https://marketingmind.in/category/adaura-awards/">AdAura Awards</a></li>
+            <li><a href="https://marketingmind.in/contact/">Contact Us</a></li>
+            <li><a href="https://marketingmind.in/become-a-guest-contributor/">Become a Guest Contributor</a></li>
+            <li><a href="https://marketingmind.in/editorial-policy/">Editorial Policy</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h3>Categories</h3>
+          <ul>
+            <li><a href="https://marketingmind.in/category/advertising/">Advertising</a></li>
+            <li><a href="https://marketingmind.in/category/marketing/">Marketing</a></li>
+            <li><a href="https://marketingmind.in/category/media/">Media</a></li>
+            <li><a href="https://marketingmind.in/category/business/">Business</a></li>
+            <li><a href="https://marketingmind.in/category/whats-buzzing/">What’s Buzzing</a></li>
+            <li><a href="https://marketingmind.in/category/experts-speak/">Experts Speak</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>©2026 All rights reserved. Digi Giant LLP</p>
+        <p>
+          <a href="https://marketingmind.in/privacy-policy/">Privacy Policy</a>
+          ·
+          <a href="https://marketingmind.in/terms/">Terms &amp; Conditions</a>
+        </p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    (function () {
+      "use strict";
+
+      const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      const isMobile = () => window.matchMedia("(max-width: 767px)").matches;
+      const isTabletDown = () => window.matchMedia("(max-width: 899px)").matches;
+
+      /* ---------- Scroll progress ---------- */
+      const progressBar = document.getElementById("scrollProgress");
+      function updateProgress() {
+        const doc = document.documentElement;
+        const max = doc.scrollHeight - doc.clientHeight;
+        const pct = max > 0 ? (doc.scrollTop / max) * 100 : 0;
+        progressBar.style.width = pct + "%";
+        progressBar.setAttribute("aria-valuenow", Math.round(pct));
+      }
+
+      /* ---------- Header state ---------- */
+      const header = document.getElementById("siteHeader");
+      function updateHeader() {
+        header.classList.toggle("is-scrolled", window.scrollY > 40);
+      }
+
+      /* ---------- Mobile nav ---------- */
+      const navToggle = document.getElementById("navToggle");
+      const navMobile = document.getElementById("navMobile");
+      const navClose = document.getElementById("navClose");
+
+      function openMobileNav() {
+        navToggle.setAttribute("aria-expanded", "true");
+        navToggle.setAttribute("aria-label", "Close menu");
+        navMobile.classList.add("is-open");
+        navMobile.hidden = false;
+        document.body.style.overflow = "hidden";
+        if (navClose) navClose.focus();
+      }
+
+      function closeMobileNav() {
+        navToggle.setAttribute("aria-expanded", "false");
+        navToggle.setAttribute("aria-label", "Open menu");
+        navMobile.classList.remove("is-open");
+        navMobile.hidden = true;
+        document.body.style.overflow = "";
+        navToggle.focus();
+      }
+
+      navToggle.addEventListener("click", function () {
+        const open = navToggle.getAttribute("aria-expanded") === "true";
+        if (open) closeMobileNav();
+        else openMobileNav();
+      });
+
+      if (navClose) {
+        navClose.addEventListener("click", closeMobileNav);
+      }
+
+      navMobile.querySelectorAll("a").forEach(function (a) {
+        a.addEventListener("click", closeMobileNav);
+      });
+
+      document.addEventListener("keydown", function (e) {
+        if (e.key === "Escape" && navToggle.getAttribute("aria-expanded") === "true") {
+          closeMobileNav();
+        }
+      });
+
+      /* ---------- Hero title word split ---------- */
+      const heroTitle = document.getElementById("heroTitle");
+      if (heroTitle && !reduceMotion) {
+        const text = heroTitle.textContent.trim();
+        heroTitle.textContent = "";
+        text.split(" ").forEach(function (word, i) {
+          const wrap = document.createElement("span");
+          wrap.className = "word";
+          const inner = document.createElement("span");
+          inner.textContent = word;
+          wrap.appendChild(inner);
+          heroTitle.appendChild(wrap);
+          if (i < text.split(" ").length - 1) heroTitle.appendChild(document.createTextNode(" "));
+        });
+      }
+
+      /* ---------- Category tabs ---------- */
+      const tabs = document.querySelectorAll(".cat-tab");
+      const panels = document.querySelectorAll(".cat-panel");
+      tabs.forEach(function (tab) {
+        tab.addEventListener("click", function () {
+          const id = tab.getAttribute("aria-controls");
+          tabs.forEach(function (t) {
+            t.setAttribute("aria-selected", "false");
+          });
+          panels.forEach(function (p) {
+            p.classList.remove("is-active");
+            p.hidden = true;
+          });
+          tab.setAttribute("aria-selected", "true");
+          const panel = document.getElementById(id);
+          if (panel) {
+            panel.hidden = false;
+            panel.classList.add("is-active");
+          }
+        });
+      });
+
+      /* ---------- Magnetic buttons ---------- */
+      function initMagnetic() {
+        if (reduceMotion || isMobile()) return;
+        document.querySelectorAll("[data-magnetic]").forEach(function (btn) {
+          btn.addEventListener("mousemove", function (e) {
+            const r = btn.getBoundingClientRect();
+            const x = e.clientX - r.left - r.width / 2;
+            const y = e.clientY - r.top - r.height / 2;
+            btn.style.transform = "translate(" + x * 0.25 + "px," + y * 0.25 + "px)";
+          });
+          btn.addEventListener("mouseleave", function () {
+            btn.style.transform = "";
+          });
+        });
+        document.querySelectorAll(".nav-link").forEach(function (link) {
+          link.addEventListener("mousemove", function (e) {
+            const r = link.getBoundingClientRect();
+            const x = e.clientX - r.left - r.width / 2;
+            link.style.transform = "translateX(" + x * 0.15 + "px)";
+          });
+          link.addEventListener("mouseleave", function () {
+            link.style.transform = "";
+          });
+        });
+      }
+
+      /* ---------- 3D tilt on story cards ---------- */
+      function initTilt() {
+        if (reduceMotion || isMobile()) return;
+        document.querySelectorAll("[data-tilt]").forEach(function (card) {
+          const media = card.querySelector(".story-card-media");
+          if (!media) return;
+          card.addEventListener("mousemove", function (e) {
+            const r = media.getBoundingClientRect();
+            const x = (e.clientX - r.left) / r.width - 0.5;
+            const y = (e.clientY - r.top) / r.height - 0.5;
+            media.style.transform = "rotateY(" + x * 10 + "deg) rotateX(" + -y * 10 + "deg)";
+          });
+          card.addEventListener("mouseleave", function () {
+            media.style.transform = "";
+          });
+        });
+      }
+
+      /* ---------- IntersectionObserver for story cards ---------- */
+      function initReveals() {
+        const cards = document.querySelectorAll(".story-card");
+        if (reduceMotion) {
+          cards.forEach(function (c) { c.classList.add("is-visible"); });
+          return;
+        }
+        const io = new IntersectionObserver(
+          function (entries) {
+            entries.forEach(function (entry) {
+              if (entry.isIntersecting) {
+                entry.target.classList.add("is-visible");
+                io.unobserve(entry.target);
+              }
+            });
+          },
+          { threshold: 0.15, rootMargin: "0px 0px -40px 0px" }
+        );
+        cards.forEach(function (c, i) {
+          c.style.transitionDelay = (i % 3) * 0.08 + "s";
+          io.observe(c);
+        });
+      }
+
+      /* ---------- Cursor parallax on hero stage only (never on layers — GSAP owns those) ---------- */
+      const heroStage = document.getElementById("heroStage");
+      let mouseX = 0, mouseY = 0, curX = 0, curY = 0;
+      let heroScrollProgress = 0;
+      function initHeroParallax() {
+        if (reduceMotion || isMobile() || !heroStage) return;
+        const hero = document.getElementById("hero");
+        hero.addEventListener("mousemove", function (e) {
+          if (heroScrollProgress > 0.12) return;
+          const r = hero.getBoundingClientRect();
+          mouseX = (e.clientX - r.left) / r.width - 0.5;
+          mouseY = (e.clientY - r.top) / r.height - 0.5;
+        });
+        hero.addEventListener("mouseleave", function () {
+          mouseX = 0;
+          mouseY = 0;
+        });
+        function tick() {
+          /* Fade mouse parallax out as the visitor scrolls the hero */
+          const damp = Math.max(0, 1 - heroScrollProgress * 4);
+          curX += (mouseX * damp - curX) * 0.07;
+          curY += (mouseY * damp - curY) * 0.07;
+          heroStage.style.transform =
+            "translate3d(" + (curX * 18) + "px," + (curY * 12) + "px,0)";
+          requestAnimationFrame(tick);
+        }
+        requestAnimationFrame(tick);
+      }
+
+      /* ---------- GSAP ScrollTrigger scenes ---------- */
+      function initGSAP() {
+        if (typeof gsap === "undefined" || typeof ScrollTrigger === "undefined") {
+          /* Fallback: native scroll listeners still work for progress/header */
+          initReveals();
+          return;
+        }
+        gsap.registerPlugin(ScrollTrigger);
+
+        if (reduceMotion) {
+          initReveals();
+          document.querySelectorAll(".intro-headline .line span, .hero-title .word span").forEach(function (el) {
+            el.style.transform = "none";
+          });
+          return;
+        }
+
+        /* Hero entrance */
+        gsap.to(".hero-title .word span", {
+          y: 0,
+          duration: 1.1,
+          stagger: 0.08,
+          ease: "power3.out",
+          delay: 0.2
+        });
+        gsap.from(".hero-dek, .hero-cta, .hero-eyebrow", {
+          opacity: 0,
+          y: 24,
+          duration: 0.9,
+          stagger: 0.1,
+          ease: "power2.out",
+          delay: 0.5
+        });
+
+        if (isMobile()) {
+          /* Mobile: full-bleed photo — Ken Burns on image, never on layer box */
+          gsap.set(".hero-layer--mid", { clearProps: "all" });
+          gsap.fromTo(".hero-layer--mid img",
+            { scale: 1.12 },
+            { scale: 1, duration: 1.6, ease: "power2.out", delay: 0.05 }
+          );
+          gsap.timeline({
+            scrollTrigger: {
+              trigger: "#hero",
+              start: "top top",
+              end: "bottom top",
+              scrub: 0.5
+            }
+          })
+            .to(".hero-layer--mid img", { scale: 1.08, ease: "none" }, 0)
+            .to(".hero-content", { y: -36, opacity: 0, ease: "none" }, 0);
+        } else {
+          /* Lock initial 3D poses in GSAP (single owner of layer transforms) */
+          gsap.set(".hero-layer--back", { z: -180, rotationY: -8, xPercent: 0, yPercent: 0, force3D: true });
+          gsap.set(".hero-layer--mid", { z: -60, rotationY: 6, xPercent: 0, yPercent: 0, force3D: true });
+          gsap.set(".hero-layer--front", { z: 80, rotationY: -4, xPercent: 0, yPercent: 0, force3D: true });
+          gsap.set(".hero-layer--accent", { z: 140, rotation: -6, xPercent: 0, yPercent: 0, force3D: true });
+
+          gsap.from(".hero-layer", {
+            autoAlpha: 0,
+            y: 40,
+            duration: 1.2,
+            stagger: 0.1,
+            ease: "power3.out",
+            delay: 0.15
+          });
+
+          /* Hero scroll — soft peel (no transform fights with cursor parallax) */
+          const heroTl = gsap.timeline({
+            scrollTrigger: {
+              trigger: "#hero",
+              start: "top top",
+              end: "bottom top",
+              scrub: 0.6,
+              onUpdate: function (self) {
+                heroScrollProgress = self.progress;
+              }
+            }
+          });
+          heroTl
+            .to(".hero-layer--back", {
+              xPercent: -10, yPercent: -4, rotationY: -12, z: -220,
+              opacity: 0, ease: "none"
+            }, 0)
+            .to(".hero-layer--mid", {
+              xPercent: -14, yPercent: 6, rotationY: 10, z: -100,
+              opacity: 0, ease: "none"
+            }, 0)
+            .to(".hero-layer--front", {
+              xPercent: 12, yPercent: 8, rotationY: -8, z: 60,
+              opacity: 0, ease: "none"
+            }, 0)
+            .to(".hero-layer--accent", {
+              xPercent: 14, yPercent: -10, rotation: 6, z: 180,
+              opacity: 0, ease: "none"
+            }, 0)
+            .to(".hero-content", { y: -48, opacity: 0, ease: "none" }, 0)
+            .to(".scroll-hint", { opacity: 0, ease: "none" }, 0)
+            .to(".hero-vignette", { opacity: 0.4, ease: "none" }, 0);
+        }
+
+        /* Scene A — intro headline + parallax */
+        gsap.to(".intro-headline .line span", {
+          y: 0,
+          duration: 1,
+          stagger: 0.12,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: "#intro",
+            start: "top 75%"
+          }
+        });
+        gsap.from(".intro-copy, .intro .view-all", {
+          opacity: 0,
+          y: 20,
+          duration: 0.8,
+          stagger: 0.1,
+          scrollTrigger: { trigger: "#intro", start: "top 70%" }
+        });
+        if (!isMobile()) {
+          gsap.to("#introVisual img", {
+            yPercent: 12,
+            ease: "none",
+            scrollTrigger: {
+              trigger: "#intro",
+              start: "top bottom",
+              end: "bottom top",
+              scrub: true
+            }
+          });
+          gsap.to(".intro-visual-float", {
+            yPercent: -28,
+            rotate: -4,
+            ease: "none",
+            scrollTrigger: {
+              trigger: "#intro",
+              start: "top bottom",
+              end: "bottom top",
+              scrub: true
+            }
+          });
+        }
+
+        /* Scene B — Advertising spotlight (pinned story cycle) */
+        (function initAdvertisingSpotlight() {
+          const pin = document.getElementById("campaignsPin");
+          if (!pin) return;
+
+          const stories = [
+            {
+              cat: "Advertising",
+              title: "From Chatty AI To Golden Chicken & Birds With Holiday FOMO: 7 Campaigns That Caught Our Eye",
+              date: "",
+              href: "https://marketingmind.in/from-chatty-ai-to-golden-chicken-birds-with-holiday-fomo-7-campaigns-that-caught-our-eye/"
+            },
+            {
+              cat: "Case Study",
+              title: "‘Hamara Bajaj!’ The Marketing Story Behind India’s Iconic Scooter Campaign",
+              date: "",
+              href: "https://marketingmind.in/hamara-bajaj-the-marketing-story-behind-indias-iconic-scooter-campaign/"
+            },
+            {
+              cat: "Advertising",
+              title: "Nikon India Unveils Durga Puja Campaign Film Featuring Nikon ZR",
+              date: "October 16, 2026",
+              href: "https://marketingmind.in/nikon-india-unveils-durga-puja-campaign-film-featuring-nikon-zr/"
+            },
+            {
+              cat: "Advertising",
+              title: "boAt Launches ‘Upgrade to boAt’ Campaign Featuring Ravi Kishan, Shreya Kalra & Sufi Motiwala",
+              date: "October 15, 2026",
+              href: "https://marketingmind.in/boat-launches-upgrade-to-boat-campaign-featuring-ravi-kishan-shreya-kalra-sufi-motiwala/"
+            },
+            {
+              cat: "Advertising",
+              title: "Rolf Hennessy Joins Swordfish Integrated Marketing Agency As Creative Director",
+              date: "October 16, 2026",
+              href: "https://marketingmind.in/rolf-hennessy-joins-swordfish-integrated-marketing-agency-as-creative-director/"
+            },
+            {
+              cat: "Advertising",
+              title: "Maithili Mullick Joins Ulka As Executive Creative Director",
+              date: "October 15, 2026",
+              href: "https://marketingmind.in/maithili-mullick-joins-ulka-as-executive-creative-director/"
+            },
+            {
+              cat: "Advertising",
+              title: "Havas Creative India Appoints Montu Sangha As Head Of Bengaluru",
+              date: "October 15, 2026",
+              href: "https://marketingmind.in/havas-creative-india-appoints-montu-sangha-as-head-of-bengaluru/"
+            }
+          ];
+
+          const slides = gsap.utils.toArray("[data-adv-slide]");
+          const elIndex = document.getElementById("advIndex");
+          const elCat = document.getElementById("advCat");
+          const elTitle = document.getElementById("advTitle");
+          const elDate = document.getElementById("advDate");
+          const elCta = document.getElementById("advCta");
+          const elBar = document.getElementById("advProgressBar");
+          const elDots = document.getElementById("advDots");
+          let current = -1;
+          let lockedIndex = null;
+
+          /* Build progress dots */
+          if (elDots) {
+            elDots.innerHTML = "";
+            stories.forEach(function (_, i) {
+              const btn = document.createElement("button");
+              btn.type = "button";
+              btn.className = "adv-dot";
+              btn.setAttribute("aria-label", "Show story " + (i + 1));
+              btn.addEventListener("click", function () {
+                lockedIndex = i;
+                showStory(i, true);
+                /* Brief lock so scroll doesn't immediately override the click */
+                window.setTimeout(function () { lockedIndex = null; }, 900);
+              });
+              elDots.appendChild(btn);
+            });
+          }
+
+          function showStory(index, animateText) {
+            if (index === current) return;
+            current = index;
+            const story = stories[index];
+
+            slides.forEach(function (slide, i) {
+              slide.classList.toggle("is-active", i === index);
+            });
+
+            if (elIndex) elIndex.textContent = String(index + 1).padStart(2, "0");
+            if (elCat) elCat.textContent = story.cat;
+            if (elDate) {
+              elDate.textContent = story.date || "";
+              elDate.hidden = !story.date;
+            }
+            if (elCta) elCta.href = story.href;
+
+            if (elDots) {
+              Array.prototype.forEach.call(elDots.children, function (dot, i) {
+                if (i === index) dot.setAttribute("aria-current", "true");
+                else dot.removeAttribute("aria-current");
+              });
+            }
+
+            if (elTitle) elTitle.textContent = story.title;
+
+            if (animateText) {
+              gsap.fromTo(
+                [elCat, elTitle, elDate, elCta].filter(Boolean),
+                { opacity: 0, y: 14 },
+                { opacity: 1, y: 0, duration: 0.4, stagger: 0.04, ease: "power2.out", overwrite: "auto" }
+              );
+            }
+          }
+
+          showStory(0, false);
+
+          /* Desktop only: pin + scrub through stories */
+          if (!window.matchMedia("(max-width: 899px)").matches && !reduceMotion) {
+            ScrollTrigger.create({
+              id: "adv-spotlight",
+              trigger: pin,
+              start: "top top",
+              end: function () {
+                return "+=" + (stories.length * window.innerHeight * 0.72);
+              },
+              pin: true,
+              scrub: 0.45,
+              anticipatePin: 1,
+              onUpdate: function (self) {
+                if (elBar) elBar.style.width = (self.progress * 100) + "%";
+                if (lockedIndex !== null) return;
+                const idx = Math.min(
+                  stories.length - 1,
+                  Math.floor(self.progress * stories.length)
+                );
+                if (idx !== current) showStory(idx, true);
+              }
+            });
+          } else if (!window.matchMedia("(max-width: 899px)").matches) {
+            /* Reduced motion desktop: still pin lightly, jump by segments */
+            ScrollTrigger.create({
+              id: "adv-spotlight",
+              trigger: pin,
+              start: "top top",
+              end: "+=120%",
+              pin: true,
+              scrub: true,
+              onUpdate: function (self) {
+                if (elBar) elBar.style.width = (self.progress * 100) + "%";
+                const idx = Math.min(
+                  stories.length - 1,
+                  Math.floor(self.progress * stories.length)
+                );
+                showStory(idx, false);
+              }
+            });
+          }
+        })();
+
+        /* Scene E — featured pin story (desktop only) */
+        ScrollTrigger.matchMedia({
+          "(min-width: 900px)": function () {
+            const featureTl = gsap.timeline({
+              scrollTrigger: {
+                id: "feature-pin",
+                trigger: "#featurePinWrap",
+                start: "top top",
+                end: "+=140%",
+                pin: true,
+                scrub: 1,
+                anticipatePin: 1
+              }
+            });
+            featureTl
+              .fromTo("#featureImage", { scale: 1.12, rotateY: -6 }, { scale: 1, rotateY: 0, ease: "none" }, 0)
+              .fromTo("#featureImage img", { scale: 1.15 }, { scale: 1, ease: "none" }, 0)
+              .fromTo("#featureText", { y: 80, opacity: 0.3 }, { y: 0, opacity: 1, ease: "none" }, 0)
+              .to("#featureImage", { scale: 0.92, rotateY: 4, ease: "none" }, 0.55)
+              .to("#featureText", { y: -40, ease: "none" }, 0.55);
+            return function () {
+              featureTl.scrollTrigger && featureTl.scrollTrigger.kill();
+              featureTl.kill();
+              gsap.set(["#featureImage", "#featureImage img", "#featureText"], { clearProps: "all" });
+            };
+          },
+          "(max-width: 899px)": function () {
+            gsap.set(["#featureImage", "#featureImage img", "#featureText", "#featurePin", "#featurePinWrap"], {
+              clearProps: "all"
+            });
+          }
+        });
+
+        /* Footer fade-in */
+        gsap.from(".footer-top > *", {
+          opacity: 0,
+          y: 30,
+          stagger: 0.12,
+          duration: 0.8,
+          scrollTrigger: { trigger: "#footer", start: "top 85%" }
+        });
+
+        initReveals();
+        ScrollTrigger.refresh();
+      }
+
+      /* ---------- Boot ---------- */
+      function onScroll() {
+        updateProgress();
+        updateHeader();
+      }
+
+      window.addEventListener("scroll", onScroll, { passive: true });
+      window.addEventListener("resize", function () {
+        if (typeof ScrollTrigger !== "undefined") ScrollTrigger.refresh();
+      });
+
+      onScroll();
+      initMagnetic();
+      initTilt();
+      initHeroParallax();
+
+      /* Wait for GSAP (defer) */
+      function waitGSAP(attempt) {
+        if (typeof gsap !== "undefined" && typeof ScrollTrigger !== "undefined") {
+          initGSAP();
+        } else if (attempt < 40) {
+          setTimeout(function () { waitGSAP(attempt + 1); }, 50);
+        } else {
+          initReveals();
+        }
+      }
+      if (document.readyState === "loading") {
+        document.addEventListener("DOMContentLoaded", function () { waitGSAP(0); });
+      } else {
+        waitGSAP(0);
+      }
+    })();
+  </script>
+</body>
+</html>
+

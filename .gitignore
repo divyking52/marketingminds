@@ -1,0 +1,10 @@
+# Local scrape / helper scripts
+_*.py
+_*.json
+_mm_home.html
+.DS_Store
+Thumbs.db
+.vercel
+
+# Local mirror of images (site uses Storebox CDN)
+assets/
